@@ -1,0 +1,41 @@
+	component niosII_system is
+		port (
+			clk_clk                                : in    std_logic                     := 'X';             -- clk
+			reset_reset_n                          : in    std_logic                     := 'X';             -- reset_n
+			pio_leds_external_connection_export    : out   std_logic_vector(7 downto 0);                     -- export
+			altpll_0_c0_clk                        : out   std_logic;                                        -- clk
+			sdram_0_wire_addr                      : out   std_logic_vector(11 downto 0);                    -- addr
+			sdram_0_wire_ba                        : out   std_logic_vector(1 downto 0);                     -- ba
+			sdram_0_wire_cas_n                     : out   std_logic;                                        -- cas_n
+			sdram_0_wire_cke                       : out   std_logic;                                        -- cke
+			sdram_0_wire_cs_n                      : out   std_logic;                                        -- cs_n
+			sdram_0_wire_dq                        : inout std_logic_vector(15 downto 0) := (others => 'X'); -- dq
+			sdram_0_wire_dqm                       : out   std_logic_vector(1 downto 0);                     -- dqm
+			sdram_0_wire_ras_n                     : out   std_logic;                                        -- ras_n
+			sdram_0_wire_we_n                      : out   std_logic;                                        -- we_n
+			i2c_opencores_0_export_scl_pad_io      : inout std_logic                     := 'X';             -- scl_pad_io
+			i2c_opencores_0_export_sda_pad_io      : inout std_logic                     := 'X';             -- sda_pad_io
+			uart_bluetooth_external_connection_rxd : in    std_logic                     := 'X';             -- rxd
+			uart_bluetooth_external_connection_txd : out   std_logic;                                        -- txd
+			epcs_flash_controller_0_external_dclk  : out   std_logic;                                        -- dclk
+			epcs_flash_controller_0_external_sce   : out   std_logic;                                        -- sce
+			epcs_flash_controller_0_external_sdo   : out   std_logic;                                        -- sdo
+			epcs_flash_controller_0_external_data0 : in    std_logic                     := 'X';             -- data0
+			dc_driver_pwma_export                  : out   std_logic;                                        -- export
+			dc_driver_pwmb_export                  : out   std_logic;                                        -- export
+			dc_driver_ain1_export                  : out   std_logic;                                        -- export
+			dc_driver_ain2_export                  : out   std_logic;                                        -- export
+			dc_driver_bin1_export                  : out   std_logic;                                        -- export
+			dc_driver_bin2_export                  : out   std_logic;                                        -- export
+			dc_driver_stby_export                  : out   std_logic;                                        -- export
+			stepper_driver_ena_export              : out   std_logic;                                        -- export
+			stepper_driver_enb_export              : out   std_logic;                                        -- export
+			stepper_driver_bin2_export             : out   std_logic;                                        -- export
+			stepper_driver_bin1_export             : out   std_logic;                                        -- export
+			stepper_driver_ain2_export             : out   std_logic;                                        -- export
+			stepper_driver_ain1_export             : out   std_logic;                                        -- export
+			i2c_sda_external_connection_export     : inout std_logic                     := 'X';             -- export
+			i2c_scl_external_connection_export     : out   std_logic                                         -- export
+		);
+	end component niosII_system;
+
