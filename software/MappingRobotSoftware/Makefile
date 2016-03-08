@@ -147,6 +147,7 @@ C_SRCS += I2C.c
 C_SRCS += terasic_lib/accelerometer_adxl345_spi.c
 C_SRCS += terasic_lib/flash.c
 C_SRCS += terasic_lib/terasic_spi.c
+C_SRCS += packet_buffer.c
 CXX_SRCS :=
 ASM_SRCS :=
 

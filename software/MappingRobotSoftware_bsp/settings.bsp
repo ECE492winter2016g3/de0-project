@@ -2,9 +2,9 @@
 <sch:Settings xmlns:sch="http://www.altera.com/embeddedsw/bsp/schema">
         <BspType>ucosii</BspType>
         <BspVersion>default</BspVersion>
-        <BspGeneratedTimeStamp>Mar 7, 2016 4:04:43 PM</BspGeneratedTimeStamp>
-        <BspGeneratedUnixTimeStamp>1457391883219</BspGeneratedUnixTimeStamp>
-        <BspGeneratedLocation>/afs/ualberta.ca/home/l/a/langen/ECE492/MappingRobot/software/MappingRobotSoftware_bsp</BspGeneratedLocation>
+        <BspGeneratedTimeStamp>Mar 8, 2016 12:39:52 PM</BspGeneratedTimeStamp>
+        <BspGeneratedUnixTimeStamp>1457465992300</BspGeneratedUnixTimeStamp>
+        <BspGeneratedLocation>/afs/ualberta.ca/home/c/j/cjamison/ece492/de0-project/software/MappingRobotSoftware_bsp</BspGeneratedLocation>
         <BspSettingsFile>settings.bsp</BspSettingsFile>
         <SopcDesignFile>../../niosII_system.sopcinfo</SopcDesignFile>
         <JdiFile>default</JdiFile>
