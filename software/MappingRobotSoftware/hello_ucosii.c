@@ -38,12 +38,8 @@
 #include <fcntl.h>
 #include "I2C.h"
 #include "packet_buffer.h"
+#include "bluetooth_helpers.h"
 
-/* Custom buffer with length */
-typedef struct {
-	char* buf;
-	int len
-} mBuffer;
 
 /* Definition of Task Stacks */
 #define   TASK_STACKSIZE       2048
@@ -51,6 +47,7 @@ OS_STK    task1_stk[TASK_STACKSIZE];
 OS_STK    task2_stk[TASK_STACKSIZE];
 OS_STK    task3_stk[TASK_STACKSIZE];
 OS_STK    task4_stk[TASK_STACKSIZE];
+OS_STK    task5_stk[TASK_STACKSIZE];
 
 /* Definition of Task Priorities */
 
@@ -58,6 +55,7 @@ OS_STK    task4_stk[TASK_STACKSIZE];
 #define TASK2_PRIORITY      2
 #define TASK3_PRIORITY      3
 #define TASK4_PRIORITY      4
+#define TASK5_PRIORITY      5
 
 /* DC Driver API */
 // EG: dc_driver_write(MOTORA_CW | MOTORB_CCW)
@@ -210,100 +208,13 @@ void task2(void* pdata)
 	}
 }
 
-/* Queue Configuration */
-// TODO: Make sure QUEUE_LENGTH is big enough for packets being sent
-// Needs to be able to contain roughly an entire packet at once
-// because the interrupts get fired in rapid succession when a packet
-// is sent, before the task has a chance to empty it out.
-// TODO: Maybe rethink what data structure we're using here
-#define QUEUE_LENGTH 256
-OS_EVENT* queue;
-void* queueBuf[QUEUE_LENGTH];
-
-#define QUEUE2_LENGTH 10
-OS_EVENT* queue2;
-void* queue2Buf[QUEUE_LENGTH];
-
-void task3(void* pdata) {
-	char message = '1';
-	INT8U err;
-	PacketBuffer pb;
-	init(&pb);
-	mBuffer buf;
-	int len;
-	printf("Task 3 :: started!\n");
-	while(1) {
-		printf("Task 3 :: waiting on queue!\n");
-		message = (char) OSQPend(queue, 0, &err);
-		printf("Received %i\n", message);
-		if(message == START_BYTE) {
-			printf("Start of Packet!\n");
-			clear(&pb);
-		} else if(message == END_BYTE) {
-			printf("End of Packet!\n");
-			buf.buf = (char*) malloc(BUF_SIZE * sizeof(char));
-			memset(buf.buf, 0, BUF_SIZE);
-			buf.len = mRead(&pb, buf.buf);
-			printf("Packet contents: %s\n", buf);
-			OSQPost(queue2, (void*) &buf);
-			// TODO: Do something with the buffer now
-		} else {
-			if(pushChar(&pb, message)) {
-				printf("Putting char: %s\n", &message);
-			} else {
-				printf("No room in buffer!\n");
-			}
-		}
-
-	}
-}
-static void uart_irq(void* context) {
-	static char read;
-	// NOTE: This read also clears the status register, notifying
-	// the UART core that the next interrupt can be fired.
-	read = IORD_ALTERA_AVALON_UART_RXDATA(UART_BLUETOOTH_BASE);
-	OSQPost(queue, (void*) read);
-}
-
-void task4(void* pdata) {
-	mBuffer buf;
-	INT8U err;
-	int nextByte = 0;
-	printf("Task 4 :: started!\n");
-	while(1) {
-		nextByte = 0;
-		printf("Task 4 :: waiting on queue2!\n");
-		buf = *((mBuffer*) OSQPend(queue2, 0, &err));
-
-		printf("From task 4: packet: %s\n", buf.buf);
-
-		printf("Task 4 :: Sending\n");
-		while(!(IORD_ALTERA_AVALON_UART_STATUS(UART_BLUETOOTH_BASE) & ALTERA_AVALON_UART_STATUS_TRDY_MSK));
-		IOWR_ALTERA_AVALON_UART_TXDATA(UART_BLUETOOTH_BASE, START_BYTE);
-
-		printf("Task 4 :: Into Loop\n");
-		while(nextByte < buf.len) {
-			printf("Task 4 :: Sending byte %i: '%i'\n", nextByte, buf.buf[nextByte]);
-			while(!(IORD_ALTERA_AVALON_UART_STATUS(UART_BLUETOOTH_BASE) & ALTERA_AVALON_UART_STATUS_TRDY_MSK));
-			IOWR_ALTERA_AVALON_UART_TXDATA(UART_BLUETOOTH_BASE, buf.buf[nextByte++]);
-		}
-		printf("Task 4 :: Out of Loop\n");
-		while(!(IORD_ALTERA_AVALON_UART_STATUS(UART_BLUETOOTH_BASE) & ALTERA_AVALON_UART_STATUS_TRDY_MSK));
-		IOWR_ALTERA_AVALON_UART_TXDATA(UART_BLUETOOTH_BASE, END_BYTE);
-
-		free(buf.buf);
-	}
-}
-
-
 /* The main function creates two task and starts multi-tasking */
 int main(void)
 {
 	printf("Starting?\n");
 
-    queue = OSQCreate(queueBuf, QUEUE_LENGTH);
-    queue2 = OSQCreate(queue2Buf, QUEUE_LENGTH);
     INT8U err;
+    initBluetooth();
   OSTaskCreateExt(task1,
                   NULL,
                   (void *)&task1_stk[TASK_STACKSIZE-1],
@@ -324,7 +235,7 @@ int main(void)
                   NULL,
                   0);
 
-  err = OSTaskCreateExt(task3,
+  err = OSTaskCreateExt(sendTask,
                   NULL,
                   (void *)&task3_stk[TASK_STACKSIZE-1],
                   TASK3_PRIORITY,
@@ -333,16 +244,8 @@ int main(void)
                   TASK_STACKSIZE,
                   NULL,
                   0);
-  printf("OS_PRIO_EXIST: %i\n", OS_PRIO_EXIST);
-  printf("OS_PRIO_INVALID: %i\n", OS_PRIO_INVALID);
-  printf("OS_NO_MORE_TCB: %i\n", OS_NO_MORE_TCB);
-  if(err != OS_NO_ERR) {
-	  printf("error creating task 3: %i\n", err);
-  } else {
-	  printf("task 3 started!\n");
-  }
 
-  OSTaskCreateExt(task4,
+  OSTaskCreateExt(receiveTask,
                   NULL,
                   (void *)&task4_stk[TASK_STACKSIZE-1],
                   TASK4_PRIORITY,
@@ -352,16 +255,20 @@ int main(void)
                   NULL,
                   0);
 
-  if(err != OS_NO_ERR) {
-	  printf("error creating task 4: %i\n", err);
-  } else {
-	  printf("task 4 started!\n");
-  }
+  OSTaskCreateExt(echoTask,
+                  NULL,
+                  (void *)&task5_stk[TASK_STACKSIZE-1],
+                  TASK5_PRIORITY,
+                  TASK5_PRIORITY,
+                  task5_stk,
+                  TASK_STACKSIZE,
+                  NULL,
+                  0);
 
   if(alt_ic_isr_register(
 				  UART_BLUETOOTH_IRQ_INTERRUPT_CONTROLLER_ID,
 				  UART_BLUETOOTH_IRQ,
-				  &uart_irq,
+				  &bluetoothIRQ,
 				  NULL,
 				  NULL
   )) {
