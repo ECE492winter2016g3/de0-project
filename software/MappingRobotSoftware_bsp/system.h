@@ -4,7 +4,7 @@
  * Machine generated for CPU 'nios2_qsys' in SOPC Builder design 'niosII_system'
  * SOPC Builder design path: ../../niosII_system.sopcinfo
  *
- * Generated: Tue Mar 08 12:39:53 MST 2016
+ * Generated: Fri Mar 11 13:46:43 MST 2016
  */
 
 /*
@@ -138,7 +138,6 @@
 #define __ALTERA_NIOS2_QSYS
 #define __ALTPLL
 #define __DC_DRIVER
-#define __I2C_OPENCORES
 #define __STEPPER_DRIVER
 
 
@@ -148,7 +147,7 @@
  */
 
 #define ALT_MODULE_CLASS_I2C_SCL altera_avalon_pio
-#define I2C_SCL_BASE 0x1012060
+#define I2C_SCL_BASE 0x1012040
 #define I2C_SCL_BIT_CLEARING_EDGE_REGISTER 0
 #define I2C_SCL_BIT_MODIFYING_OUTPUT_REGISTER 0
 #define I2C_SCL_CAPTURE 0
@@ -175,7 +174,7 @@
  */
 
 #define ALT_MODULE_CLASS_I2C_SDA altera_avalon_pio
-#define I2C_SDA_BASE 0x1012070
+#define I2C_SDA_BASE 0x1012050
 #define I2C_SDA_BIT_CLEARING_EDGE_REGISTER 0
 #define I2C_SDA_BIT_MODIFYING_OUTPUT_REGISTER 0
 #define I2C_SDA_CAPTURE 0
@@ -212,19 +211,19 @@
 #define ALT_NUM_INTERNAL_INTERRUPT_CONTROLLERS 1
 #define ALT_NUM_INTERRUPT_CONTROLLERS 1
 #define ALT_STDERR "/dev/jtag_uart"
-#define ALT_STDERR_BASE 0x10120c0
+#define ALT_STDERR_BASE 0x10120a0
 #define ALT_STDERR_DEV jtag_uart
 #define ALT_STDERR_IS_JTAG_UART
 #define ALT_STDERR_PRESENT
 #define ALT_STDERR_TYPE "altera_avalon_jtag_uart"
 #define ALT_STDIN "/dev/jtag_uart"
-#define ALT_STDIN_BASE 0x10120c0
+#define ALT_STDIN_BASE 0x10120a0
 #define ALT_STDIN_DEV jtag_uart
 #define ALT_STDIN_IS_JTAG_UART
 #define ALT_STDIN_PRESENT
 #define ALT_STDIN_TYPE "altera_avalon_jtag_uart"
 #define ALT_STDOUT "/dev/jtag_uart"
-#define ALT_STDOUT_BASE 0x10120c0
+#define ALT_STDOUT_BASE 0x10120a0
 #define ALT_STDOUT_DEV jtag_uart
 #define ALT_STDOUT_IS_JTAG_UART
 #define ALT_STDOUT_PRESENT
@@ -237,7 +236,7 @@
  *
  */
 
-#define ALTPLL_BASE 0x1012080
+#define ALTPLL_BASE 0x1012060
 #define ALTPLL_IRQ -1
 #define ALTPLL_IRQ_INTERRUPT_CONTROLLER_ID -1
 #define ALTPLL_NAME "/dev/altpll"
@@ -252,7 +251,7 @@
  */
 
 #define ALT_MODULE_CLASS_dc_driver_0 dc_driver
-#define DC_DRIVER_0_BASE 0x10120b8
+#define DC_DRIVER_0_BASE 0x1012098
 #define DC_DRIVER_0_IRQ -1
 #define DC_DRIVER_0_IRQ_INTERRUPT_CONTROLLER_ID -1
 #define DC_DRIVER_0_NAME "/dev/dc_driver_0"
@@ -286,26 +285,12 @@
 
 
 /*
- * i2c_opencores_lidar configuration
- *
- */
-
-#define ALT_MODULE_CLASS_i2c_opencores_lidar i2c_opencores
-#define I2C_OPENCORES_LIDAR_BASE 0x1012000
-#define I2C_OPENCORES_LIDAR_IRQ 3
-#define I2C_OPENCORES_LIDAR_IRQ_INTERRUPT_CONTROLLER_ID 0
-#define I2C_OPENCORES_LIDAR_NAME "/dev/i2c_opencores_lidar"
-#define I2C_OPENCORES_LIDAR_SPAN 32
-#define I2C_OPENCORES_LIDAR_TYPE "i2c_opencores"
-
-
-/*
  * jtag_uart configuration
  *
  */
 
 #define ALT_MODULE_CLASS_jtag_uart altera_avalon_jtag_uart
-#define JTAG_UART_BASE 0x10120c0
+#define JTAG_UART_BASE 0x10120a0
 #define JTAG_UART_IRQ 1
 #define JTAG_UART_IRQ_INTERRUPT_CONTROLLER_ID 0
 #define JTAG_UART_NAME "/dev/jtag_uart"
@@ -352,7 +337,7 @@
  */
 
 #define ALT_MODULE_CLASS_pio_leds altera_avalon_pio
-#define PIO_LEDS_BASE 0x1012090
+#define PIO_LEDS_BASE 0x1012070
 #define PIO_LEDS_BIT_CLEARING_EDGE_REGISTER 0
 #define PIO_LEDS_BIT_MODIFYING_OUTPUT_REGISTER 0
 #define PIO_LEDS_CAPTURE 0
@@ -418,7 +403,7 @@
  */
 
 #define ALT_MODULE_CLASS_stepper_driver_0 stepper_driver
-#define STEPPER_DRIVER_0_BASE 0x10120b0
+#define STEPPER_DRIVER_0_BASE 0x1012090
 #define STEPPER_DRIVER_0_IRQ -1
 #define STEPPER_DRIVER_0_IRQ_INTERRUPT_CONTROLLER_ID -1
 #define STEPPER_DRIVER_0_NAME "/dev/stepper_driver_0"
@@ -432,13 +417,13 @@
  */
 
 #define ALT_MODULE_CLASS_sysid altera_avalon_sysid_qsys
-#define SYSID_BASE 0x10120c8
+#define SYSID_BASE 0x10120a8
 #define SYSID_ID 0
 #define SYSID_IRQ -1
 #define SYSID_IRQ_INTERRUPT_CONTROLLER_ID -1
 #define SYSID_NAME "/dev/sysid"
 #define SYSID_SPAN 8
-#define SYSID_TIMESTAMP 1457465571
+#define SYSID_TIMESTAMP 1457724164
 #define SYSID_TYPE "altera_avalon_sysid_qsys"
 
 
@@ -449,7 +434,7 @@
 
 #define ALT_MODULE_CLASS_timer altera_avalon_timer
 #define TIMER_ALWAYS_RUN 0
-#define TIMER_BASE 0x1012040
+#define TIMER_BASE 0x1012020
 #define TIMER_COUNTER_SIZE 32
 #define TIMER_FIXED_PERIOD 0
 #define TIMER_FREQ 50000000u
@@ -474,7 +459,7 @@
  */
 
 #define ALT_MODULE_CLASS_uart_bluetooth altera_avalon_uart
-#define UART_BLUETOOTH_BASE 0x1012020
+#define UART_BLUETOOTH_BASE 0x1012000
 #define UART_BLUETOOTH_BAUD 115200
 #define UART_BLUETOOTH_DATA_BITS 8
 #define UART_BLUETOOTH_FIXED_BAUD 1

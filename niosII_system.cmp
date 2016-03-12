@@ -13,8 +13,6 @@
 			sdram_0_wire_dqm                       : out   std_logic_vector(1 downto 0);                     -- dqm
 			sdram_0_wire_ras_n                     : out   std_logic;                                        -- ras_n
 			sdram_0_wire_we_n                      : out   std_logic;                                        -- we_n
-			i2c_opencores_0_export_scl_pad_io      : inout std_logic                     := 'X';             -- scl_pad_io
-			i2c_opencores_0_export_sda_pad_io      : inout std_logic                     := 'X';             -- sda_pad_io
 			uart_bluetooth_external_connection_rxd : in    std_logic                     := 'X';             -- rxd
 			uart_bluetooth_external_connection_txd : out   std_logic;                                        -- txd
 			epcs_flash_controller_0_external_dclk  : out   std_logic;                                        -- dclk

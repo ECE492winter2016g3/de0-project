@@ -48,8 +48,8 @@ library ieee;
 		DRAM_WE_N	: 	out 	std_logic;
 		
 		-- I2C lines for EEPROM
-		I2C_SCLK		:  inout std_logic;
-		I2C_SDAT		:  inout	std_logic;
+		--I2C_SCLK		:  inout std_logic;
+		--I2C_SDAT		:  inout	std_logic;
 		
 		-- GPIO lines 
 		GPIO_1		: 	inout DE0_GPIO_1;
@@ -71,8 +71,6 @@ architecture structure of niosII_microc_mapping_robot is
 		port (
 			altpll_0_c0_clk                         	: out   std_logic;                                        -- clk
 			reset_reset_n                           	: in    std_logic                     := 'X';             -- reset_n
-			i2c_opencores_0_export_scl_pad_io			: inout std_logic;
-			i2c_opencores_0_export_sda_pad_io			: inout std_logic;
 			clk_clk                                 	: in    std_logic                     := 'X';             -- clk
 			sdram_0_wire_addr                       	: out   DE0_SDRAM_ADDR_BUS;                    -- addr
          sdram_0_wire_ba                         	: out   std_logic_vector(1 downto 0);                     -- ba
@@ -117,29 +115,18 @@ architecture structure of niosII_microc_mapping_robot is
 	 signal BA	: std_logic_vector (1 downto 0);
 	 signal DQM	:	std_logic_vector (1 downto 0);
 	
--- I2C
-	 --signal I2C_SCL_S : std_logic;
-	 --signal I2C_SDA_S : std_logic;	 
-
 begin
 
 	DRAM_BA <= BA;	
 	
 	DRAM_DQM <= DQM;	
 	
-	--I2C_SCLK <= I2C_SCL_S;
-	--I2C_SDAT <= I2C_SDA_S;
-	--GPIO_1(15) <= I2C_SCL_S;
-	--GPIO_1(16) <= I2C_SDA_S;
-	
 	-- Component Instantiation Statement (optional)
 	
 	  u0 : component niosII_system
 			port map(
 				altpll_0_c0_clk                         => DRAM_CLK,                        
-				reset_reset_n                           => KEY(0),                          
-				--i2c_opencores_0_export_scl_pad_io		 => GPIO_1(15),	
-				--i2c_opencores_0_export_sda_pad_io		 => GPIO_1(16),	
+				reset_reset_n                           => KEY(0),                  					
 				clk_clk                                 => CLOCK_50,                                
 				sdram_0_wire_addr                       => DRAM_ADDR,                      
 				sdram_0_wire_ba                         => BA,                        

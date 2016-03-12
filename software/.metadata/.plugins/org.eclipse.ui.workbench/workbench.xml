@@ -28,34 +28,29 @@
 <info part="DefaultEditorWorkbook">
 <folder appearance="1" expanded="2">
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
 <part id="1"/>
+<part id="0"/>
 <part id="2"/>
 <part id="3"/>
-<part id="4"/>
 </presentation>
 </folder>
 </info>
 </editorArea>
-<editor activePart="true" focus="true" id="org.eclipse.cdt.ui.editor.CEditor" name="hello_ucosii.c" partName="hello_ucosii.c" path="/afs/ualberta.ca/home/c/j/cjamison/ece492/de0-project/software/MappingRobotSoftware/hello_ucosii.c" title="hello_ucosii.c" tooltip="MappingRobotSoftware/hello_ucosii.c" workbook="DefaultEditorWorkbook">
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="LIDAR.c" partName="LIDAR.c" path="/afs/ualberta.ca/home/j/k/jkeeling/ece492/de0-project/software/MappingRobotSoftware/LIDAR.c" title="LIDAR.c" tooltip="MappingRobotSoftware/LIDAR.c" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/MappingRobotSoftware/LIDAR.c"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="1591" selectionTopPixel="1041"/>
+</editor>
+<editor activePart="true" focus="true" id="org.eclipse.cdt.ui.editor.CEditor" name="hello_ucosii.c" partName="hello_ucosii.c" path="/afs/ualberta.ca/home/j/k/jkeeling/ece492/de0-project/software/MappingRobotSoftware/hello_ucosii.c" title="hello_ucosii.c" tooltip="MappingRobotSoftware/hello_ucosii.c" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/MappingRobotSoftware/hello_ucosii.c"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="9292" selectionTopPixel="4410"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="4731" selectionTopPixel="1684"/>
 </editor>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="I2C.c" partName="I2C.c" path="/afs/ualberta.ca/home/c/j/cjamison/ece492/de0-project/software/MappingRobotSoftware/I2C.c" title="I2C.c" tooltip="MappingRobotSoftware/I2C.c" workbook="DefaultEditorWorkbook">
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="LIDAR.h" partName="LIDAR.h" path="/afs/ualberta.ca/home/j/k/jkeeling/ece492/de0-project/software/MappingRobotSoftware/LIDAR.h" title="LIDAR.h" tooltip="MappingRobotSoftware/LIDAR.h" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/MappingRobotSoftware/LIDAR.h"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="118" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="I2C.c" partName="I2C.c" path="/afs/ualberta.ca/home/j/k/jkeeling/ece492/de0-project/software/MappingRobotSoftware/I2C.c" title="I2C.c" tooltip="MappingRobotSoftware/I2C.c" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/MappingRobotSoftware/I2C.c"/>
-<editorState selectionHorizontalPixel="0" selectionLength="25" selectionOffset="3268" selectionTopPixel="1392"/>
-</editor>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="I2C.h" partName="I2C.h" path="/afs/ualberta.ca/home/c/j/cjamison/ece492/de0-project/software/MappingRobotSoftware/I2C.h" title="I2C.h" tooltip="MappingRobotSoftware/I2C.h" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/MappingRobotSoftware/I2C.h"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="530" selectionTopPixel="317"/>
-</editor>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="packet_buffer.h" partName="packet_buffer.h" path="/afs/ualberta.ca/home/c/j/cjamison/ece492/de0-project/software/MappingRobotSoftware/packet_buffer.h" title="packet_buffer.h" tooltip="MappingRobotSoftware/packet_buffer.h" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/MappingRobotSoftware/packet_buffer.h"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="309" selectionTopPixel="52"/>
-</editor>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="packet_buffer.c" partName="packet_buffer.c" path="/afs/ualberta.ca/home/c/j/cjamison/ece492/de0-project/software/MappingRobotSoftware/packet_buffer.c" title="packet_buffer.c" tooltip="MappingRobotSoftware/packet_buffer.c" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/MappingRobotSoftware/packet_buffer.c"/>
-<editorState selectionHorizontalPixel="0" selectionLength="4" selectionOffset="138" selectionTopPixel="0"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="3863" selectionTopPixel="1904"/>
 </editor>
 </editors>
 <views>
@@ -96,11 +91,6 @@
 <view id="org.eclipse.debug.ui.RegisterView" partName="Registers"/>
 <view id="org.eclipse.ui.views.ProblemView" partName="Problems">
 <viewState PRIMARY_SORT_FIELD="org.eclipse.ui.ide.severityAndDescriptionField" categoryGroup="org.eclipse.ui.ide.severity" markerContentGenerator="org.eclipse.ui.ide.problemsGenerator" partName="Problems">
-<expanded>
-<category IMemento.internal.id="Warnings (17 items)"/>
-<category IMemento.internal.id="Errors"/>
-<category IMemento.internal.id="Warnings"/>
-</expanded>
 <columnWidths org.eclipse.ui.ide.locationField="105" org.eclipse.ui.ide.markerType="471" org.eclipse.ui.ide.pathField="140" org.eclipse.ui.ide.resourceField="105" org.eclipse.ui.ide.severityAndDescriptionField="418"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.severityAndDescriptionField"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.resourceField"/>
@@ -114,7 +104,7 @@
 </view>
 <view id="org.eclipse.mylyn.tasks.ui.views.tasks" partName="Task List"/>
 </views>
-<perspectives activePart="org.eclipse.ui.navigator.ProjectExplorer" activePerspective="com.altera.sbtgui.ui.cPerspective">
+<perspectives activePart="org.eclipse.cdt.ui.editor.CEditor" activePerspective="com.altera.sbtgui.ui.cPerspective">
 <perspective editorAreaTrimState="2" editorAreaVisible="1" fixed="0" version="0.016">
 <descriptor class="org.eclipse.cdt.internal.ui.CPerspectiveFactory" id="org.eclipse.cdt.ui.CPerspective" label="C/C++"/>
 <alwaysOnActionSet id="org.eclipse.mylyn.context.ui.actionSet"/>
@@ -286,8 +276,8 @@
 </folder>
 </info>
 <info part="org.eclipse.ui.editorss" ratio="0.2113366" ratioLeft="302" ratioRight="1127" relationship="2" relative="topLeft"/>
-<info folder="true" part="bottom" ratio="0.61196107" ratioLeft="440" ratioRight="279" relationship="4" relative="org.eclipse.ui.editorss">
-<folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">
+<info folder="true" part="bottom" ratio="0.63699585" ratioLeft="458" ratioRight="261" relationship="4" relative="org.eclipse.ui.editorss">
+<folder activePageID="com.altera.sbtgui.launch.hardware.ByteStreamConsoleView:USB-Blaster on localhost [2-1.6].1.0" appearance="2" expanded="2">
 <page content="org.eclipse.ui.views.ProblemView" label="Problems"/>
 <page content="org.eclipse.ui.views.TaskList" label="Tasks"/>
 <page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
@@ -358,42 +348,57 @@
 <view id="org.eclipse.debug.ui.MemoryView"/>
 <view id="org.eclipse.ui.views.ContentOutline"/>
 <fastViewBars/>
-<layout>&#x0A;<mainWindow>&#x0A;<info folder="true" part="org.eclipse.debug.internal.ui.NavigatorFolderView">&#x0A;<folder activePageID="org.eclipse.debug.ui.DebugView" appearance="2" expanded="2">&#x0A;<page content="org.eclipse.debug.ui.DebugView" label="Debug"/>
+<layout>
+<mainWindow>
+<info folder="true" part="org.eclipse.debug.internal.ui.NavigatorFolderView">
+<folder activePageID="org.eclipse.debug.ui.DebugView" appearance="2" expanded="2">
+<page content="org.eclipse.debug.ui.DebugView" label="Debug"/>
 <page content="org.eclipse.ui.views.ResourceNavigator" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
 </presentation>
 </folder>
 </info>
-<info folder="true" part="stickyFolderRight" ratio="0.75" ratioLeft="1074" ratioRight="358" relationship="2" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">&#x0A;<folder appearance="2" expanded="2">&#x0A;<page content="org.eclipse.help.ui.HelpView" label="LabelNotFound"/>
+<info folder="true" part="stickyFolderRight" ratio="0.75" ratioLeft="1074" ratioRight="358" relationship="2" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">
+<folder appearance="2" expanded="2">
+<page content="org.eclipse.help.ui.HelpView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.internal.introview" label="LabelNotFound"/>
 <page content="org.eclipse.ui.cheatsheets.views.CheatSheetView" label="LabelNotFound"/>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.debug.internal.ui.ConsoleFolderView" ratio="0.74930745" ratioLeft="541" ratioRight="181" relationship="4" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">&#x0A;<folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">&#x0A;<page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
+<info folder="true" part="org.eclipse.debug.internal.ui.ConsoleFolderView" ratio="0.74930745" ratioLeft="541" ratioRight="181" relationship="4" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">
+<folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">
+<page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
 <page content="org.eclipse.ui.views.TaskList" label="Tasks"/>
-<page content="com.altera.sbtgui.launch.hardware.ByteStreamConsoleView:USB-Blaster on localhost [2-1.6].1.0" label="Nios II Console"/>
+<page content="com.altera.sbtgui.launch.hardware.ByteStreamConsoleView:USB-Blaster on localhost [2-1.6].1.0" label="LabelNotFound"/>
 <page content="org.eclipse.ui.views.BookmarkView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.views.PropertySheet" label="LabelNotFound"/>
 <page content="com.altera.sbtgui.launch.hardware.ByteStreamConsoleView:*" label="LabelNotFound"/>
 <page content="com.altera.sbtgui.launch.hardware.ByteStreamConsoleView" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
 <part id="1"/>
-<part id="2"/>
 </presentation>
 </folder>
 </info>
 <info part="org.eclipse.ui.editorss" ratio="0.4491682" ratioLeft="243" ratioRight="298" relationship="4" relative="org.eclipse.debug.internal.ui.NavigatorFolderView"/>
-<info folder="true" part="org.eclipse.debug.internal.ui.OutlineFolderView" ratio="0.75" ratioLeft="1074" ratioRight="358" relationship="2" relative="org.eclipse.ui.editorss">&#x0A;<folder activePageID="org.eclipse.ui.views.ContentOutline" appearance="2" expanded="2">&#x0A;<page content="org.eclipse.ui.views.ContentOutline" label="Outline"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
+<info folder="true" part="org.eclipse.debug.internal.ui.OutlineFolderView" ratio="0.75" ratioLeft="1074" ratioRight="358" relationship="2" relative="org.eclipse.ui.editorss">
+<folder activePageID="org.eclipse.ui.views.ContentOutline" appearance="2" expanded="2">
+<page content="org.eclipse.ui.views.ContentOutline" label="Outline"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
 </presentation>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.debug.internal.ui.ToolsFolderView" ratio="0.5" ratioLeft="716" ratioRight="716" relationship="2" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">&#x0A;<folder activePageID="org.eclipse.debug.ui.VariableView" appearance="2" expanded="2">&#x0A;<page content="org.eclipse.debug.ui.VariableView" label="Variables"/>
+<info folder="true" part="org.eclipse.debug.internal.ui.ToolsFolderView" ratio="0.5" ratioLeft="716" ratioRight="716" relationship="2" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">
+<folder activePageID="org.eclipse.debug.ui.VariableView" appearance="2" expanded="2">
+<page content="org.eclipse.debug.ui.VariableView" label="Variables"/>
 <page content="org.eclipse.debug.ui.BreakpointView" label="Breakpoints"/>
 <page content="org.eclipse.debug.ui.RegisterView" label="Registers"/>
 <page content="org.eclipse.debug.ui.MemoryView" label="Memory"/>
 <page content="org.eclipse.debug.ui.ExpressionView" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
 <part id="1"/>
 <part id="2"/>
 <part id="3"/>
@@ -408,166 +413,159 @@
 <navigationHistory>
 <editors>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/MappingRobotSoftware/hello_ucosii.c"/>
-<editor factoryID="org.eclipse.ui.ide.FileStoreEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" uri="file:/afs/ualberta.ca/home/l/a/langen/ECE492/quartusfiles/software/MappingRobotSoftware/hello_ucosii.c"/>
-<editor factoryID="org.eclipse.cdt.ui.ExternalEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/OPT/altera/12.1/tools/nios2eds/bin/gnu/H-i686-pc-linux-gnu/nios2-elf/include/fcntl.h" project="MappingRobotSoftware"/>
-<editor factoryID="org.eclipse.cdt.ui.ExternalEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/OPT/altera/12.1/tools/nios2eds/bin/gnu/H-i686-pc-linux-gnu/nios2-elf/include/sys/fcntl.h" project="MappingRobotSoftware"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/MappingRobotSoftware_bsp/HAL/src/alt_dev.c"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/MappingRobotSoftware/hello_ucosii.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/MappingRobotSoftware/LIDAR.c"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/MappingRobotSoftware/I2C.c"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/MappingRobotSoftware/I2C.h"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/MappingRobotSoftware/terasic_lib/terasic_includes.h"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/MappingRobotSoftware/packet_buffer.h"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/MappingRobotSoftware/packet_buffer.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/MappingRobotSoftware/hello_ucosii.c"/>
 </editors>
-<item historyLabel="hello_ucosii.c" index="0">
-<position info="not_deleted" x="3403" y="0"/>
+<item historyLabel="I2C.c" index="2">
+<position info="not_deleted" x="6397" y="0"/>
+</item>
+<item historyLabel="LIDAR.c" index="1">
+<position info="not_deleted" x="849" y="0"/>
+</item>
+<item historyLabel="I2C.c" index="2">
+<position info="not_deleted" x="5107" y="0"/>
+</item>
+<item historyLabel="I2C.c" index="2">
+<position info="not_deleted" x="6341" y="0"/>
+</item>
+<item historyLabel="I2C.c" index="2">
+<position info="not_deleted" x="7364" y="0"/>
+</item>
+<item historyLabel="I2C.c" index="2">
+<position info="not_deleted" x="7447" y="0"/>
+</item>
+<item historyLabel="I2C.c" index="2">
+<position info="not_deleted" x="7500" y="0"/>
+</item>
+<item historyLabel="I2C.c" index="2">
+<position info="not_deleted" x="8750" y="0"/>
+</item>
+<item historyLabel="LIDAR.c" index="1">
+<position info="not_deleted" x="848" y="0"/>
 </item>
 <item historyLabel="hello_ucosii.c" index="0">
-<position info="not_deleted" x="3434" y="0"/>
+<position info="not_deleted" x="5413" y="0"/>
+</item>
+<item historyLabel="LIDAR.c" index="1">
+<position info="not_deleted" x="849" y="0"/>
+</item>
+<item historyLabel="I2C.c" index="2">
+<position info="not_deleted" x="8458" y="0"/>
+</item>
+<item historyLabel="LIDAR.c" index="1">
+<position info="not_deleted" x="849" y="0"/>
+</item>
+<item historyLabel="LIDAR.c" index="1">
+<position info="not_deleted" x="945" y="0"/>
+</item>
+<item historyLabel="LIDAR.c" index="1">
+<position info="not_deleted" x="1616" y="0"/>
+</item>
+<item historyLabel="I2C.c" index="2">
+<position info="not_deleted" x="4867" y="26"/>
+</item>
+<item historyLabel="I2C.c" index="2">
+<position info="not_deleted" x="5107" y="0"/>
+</item>
+<item historyLabel="LIDAR.c" index="1">
+<position info="not_deleted" x="849" y="0"/>
+</item>
+<item historyLabel="I2C.c" index="2">
+<position info="not_deleted" x="5107" y="0"/>
+</item>
+<item historyLabel="I2C.c" index="2">
+<position info="not_deleted" x="6341" y="0"/>
+</item>
+<item historyLabel="I2C.c" index="2">
+<position info="not_deleted" x="6397" y="0"/>
 </item>
 <item historyLabel="hello_ucosii.c" index="0">
-<position info="not_deleted" x="3457" y="0"/>
+<position info="not_deleted" x="5413" y="0"/>
 </item>
 <item historyLabel="hello_ucosii.c" index="0">
-<position info="not_deleted" x="3480" y="0"/>
+<position info="not_deleted" x="4753" y="0"/>
 </item>
 <item historyLabel="hello_ucosii.c" index="0">
-<position info="not_deleted" x="3520" y="0"/>
+<position info="not_deleted" x="4755" y="0"/>
 </item>
 <item historyLabel="hello_ucosii.c" index="0">
-<position info="not_deleted" x="3548" y="0"/>
+<position info="not_deleted" x="5413" y="0"/>
 </item>
-<item historyLabel="hello_ucosii.c" index="0">
-<position info="not_deleted" x="3597" y="0"/>
+<item historyLabel="LIDAR.c" index="1">
+<position info="not_deleted" x="849" y="0"/>
 </item>
-<item historyLabel="hello_ucosii.c" index="0">
-<position info="not_deleted" x="3706" y="0"/>
+<item historyLabel="LIDAR.c" index="1">
+<position info="not_deleted" x="1233" y="0"/>
 </item>
-<item historyLabel="hello_ucosii.c" index="0">
-<position info="not_deleted" x="3751" y="0"/>
+<item historyLabel="LIDAR.c" index="1">
+<position info="not_deleted" x="1255" y="0"/>
 </item>
-<item historyLabel="hello_ucosii.c" index="0">
-<position info="not_deleted" x="3520" y="0"/>
+<item historyLabel="LIDAR.c" index="1">
+<position info="not_deleted" x="1295" y="0"/>
 </item>
-<item historyLabel="hello_ucosii.c" index="0">
-<position info="not_deleted" x="3795" y="0"/>
+<item historyLabel="I2C.c" index="2">
+<position info="not_deleted" x="3417" y="0"/>
 </item>
-<item historyLabel="hello_ucosii.c" index="0">
-<position info="not_deleted" x="0" y="0"/>
+<item historyLabel="I2C.c" index="2">
+<position info="not_deleted" x="3441" y="0"/>
 </item>
-<item historyLabel="hello_ucosii.c" index="0">
-<position info="not_deleted" x="0" y="0"/>
+<item historyLabel="I2C.c" index="2">
+<position info="not_deleted" x="3516" y="0"/>
 </item>
-<item historyLabel="hello_ucosii.c" index="1">
-<position info="not_deleted" x="0" y="0"/>
+<item historyLabel="I2C.c" index="2">
+<position info="not_deleted" x="3592" y="0"/>
 </item>
-<item historyLabel="hello_ucosii.c" index="0">
-<position info="not_deleted" x="868" y="0"/>
+<item historyLabel="I2C.c" index="2">
+<position info="not_deleted" x="3634" y="0"/>
 </item>
-<item historyLabel="fcntl.h" index="2">
-<position info="not_deleted" x="14" y="0"/>
+<item historyLabel="I2C.c" index="2">
+<position info="not_deleted" x="3687" y="0"/>
 </item>
-<item historyLabel="fcntl.h" index="3">
-<position info="not_deleted" x="62" y="0"/>
+<item historyLabel="I2C.c" index="2">
+<position info="not_deleted" x="3592" y="0"/>
 </item>
-<item historyLabel="alt_dev.c" index="4">
-<position info="not_deleted" x="0" y="0"/>
+<item historyLabel="I2C.c" index="2">
+<position info="not_deleted" x="3702" y="0"/>
 </item>
-<item historyLabel="hello_ucosii.c" index="5">
-<position info="not_deleted" x="3427" y="0"/>
+<item historyLabel="I2C.c" index="2">
+<position info="not_deleted" x="3846" y="0"/>
 </item>
-<item historyLabel="I2C.c" index="6">
-<position info="not_deleted" x="2465" y="9"/>
+<item historyLabel="I2C.c" index="2">
+<position info="not_deleted" x="3863" y="0"/>
 </item>
-<item historyLabel="hello_ucosii.c" index="5">
-<position info="not_deleted" x="3427" y="0"/>
+<item historyLabel="LIDAR.c" index="1">
+<position info="not_deleted" x="1416" y="0"/>
 </item>
-<item historyLabel="I2C.c" index="6">
-<position info="not_deleted" x="2465" y="9"/>
+<item historyLabel="LIDAR.c" index="1">
+<position info="not_deleted" x="1455" y="0"/>
 </item>
-<item historyLabel="I2C.h" index="7">
-<position info="not_deleted" x="530" y="0"/>
+<item historyLabel="LIDAR.c" index="1">
+<position info="not_deleted" x="1471" y="0"/>
 </item>
-<item historyLabel="hello_ucosii.c" index="5">
-<position info="not_deleted" x="3427" y="0"/>
+<item historyLabel="LIDAR.c" index="1">
+<position info="not_deleted" x="889" y="0"/>
 </item>
-<item historyLabel="terasic_includes.h" index="8">
-<position info="not_deleted" x="656" y="0"/>
+<item historyLabel="LIDAR.c" index="1">
+<position info="not_deleted" x="927" y="0"/>
 </item>
-<item historyLabel="hello_ucosii.c" index="5">
-<position info="not_deleted" x="3429" y="0"/>
+<item historyLabel="LIDAR.c" index="1">
+<position info="not_deleted" x="1497" y="0"/>
 </item>
-<item historyLabel="I2C.c" index="6">
-<position info="not_deleted" x="2465" y="9"/>
+<item historyLabel="LIDAR.c" index="1">
+<position info="not_deleted" x="1516" y="0"/>
 </item>
-<item historyLabel="hello_ucosii.c" index="5">
-<position info="not_deleted" x="3429" y="0"/>
+<item historyLabel="LIDAR.c" index="1">
+<position info="not_deleted" x="1535" y="0"/>
 </item>
-<item historyLabel="hello_ucosii.c" index="5">
-<position info="not_deleted" x="3481" y="0"/>
+<item historyLabel="LIDAR.c" index="1">
+<position info="not_deleted" x="1551" y="0"/>
 </item>
-<item historyLabel="I2C.c" index="6">
-<position info="not_deleted" x="6269" y="17"/>
+<item historyLabel="LIDAR.c" index="1">
+<position info="not_deleted" x="1591" y="0"/>
 </item>
-<item historyLabel="I2C.h" index="7">
-<position info="not_deleted" x="530" y="0"/>
-</item>
-<item historyLabel="I2C.c" index="6">
-<position info="not_deleted" x="6264" y="74"/>
-</item>
-<item historyLabel="hello_ucosii.c" index="5">
-<position info="not_deleted" x="3881" y="0"/>
-</item>
-<item historyLabel="I2C.c" index="6">
-<position info="not_deleted" x="3268" y="25"/>
-</item>
-<item historyLabel="I2C.h" index="7">
-<position info="not_deleted" x="530" y="0"/>
-</item>
-<item historyLabel="hello_ucosii.c" index="5">
-<position info="not_deleted" x="7971" y="7"/>
-</item>
-<item historyLabel="packet_buffer.h" index="9">
-<position info="not_deleted" x="352" y="0"/>
-</item>
-<item historyLabel="hello_ucosii.c" index="5">
-<position info="not_deleted" x="8098" y="0"/>
-</item>
-<item historyLabel="packet_buffer.h" index="9">
-<position info="not_deleted" x="154" y="0"/>
-</item>
-<item historyLabel="hello_ucosii.c" index="5">
-<position info="not_deleted" x="8098" y="0"/>
-</item>
-<item historyLabel="packet_buffer.h" index="9">
-<position info="not_deleted" x="334" y="0"/>
-</item>
-<item historyLabel="packet_buffer.c" index="10">
-<position info="not_deleted" x="138" y="4"/>
-</item>
-<item historyLabel="packet_buffer.h" index="9">
-<position info="not_deleted" x="334" y="0"/>
-</item>
-<item historyLabel="hello_ucosii.c" index="5">
-<position info="not_deleted" x="2377" y="0"/>
-</item>
-<item historyLabel="packet_buffer.h" index="9">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="hello_ucosii.c" index="5">
-<position info="not_deleted" x="7961" y="0"/>
-</item>
-<item historyLabel="packet_buffer.c" index="10">
-<position info="not_deleted" x="138" y="4"/>
-</item>
-<item historyLabel="hello_ucosii.c" index="5">
-<position info="not_deleted" x="8164" y="0"/>
-</item>
-<item historyLabel="packet_buffer.h" index="9">
-<position info="not_deleted" x="309" y="0"/>
-</item>
-<item active="true" historyLabel="hello_ucosii.c" index="5">
-<position info="not_deleted" x="8164" y="0"/>
+<item active="true" historyLabel="hello_ucosii.c" index="3">
+<position info="not_deleted" x="5395" y="0"/>
 </item>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
@@ -587,23 +585,32 @@
 </trimLayout>
 </window>
 <mruList>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="I2C.c" tooltip="MappingRobotSoftware/I2C.c">
+<persistable path="/MappingRobotSoftware/I2C.c"/>
+</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="packet_buffer.c" tooltip="MappingRobotSoftware/packet_buffer.c">
 <persistable path="/MappingRobotSoftware/packet_buffer.c"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="packet_buffer.h" tooltip="MappingRobotSoftware/packet_buffer.h">
-<persistable path="/MappingRobotSoftware/packet_buffer.h"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="LIDAR.h" tooltip="MappingRobotSoftware/LIDAR.h">
+<persistable path="/MappingRobotSoftware/LIDAR.h"/>
+</file>
+<file factoryID="org.eclipse.cdt.ui.ExternalEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="unistd.h" tooltip="/OPT/altera/12.1/tools/nios2eds/bin/gnu/H-i686-pc-linux-gnu/nios2-elf/include/sys/unistd.h">
+<persistable path="/OPT/altera/12.1/tools/nios2eds/bin/gnu/H-i686-pc-linux-gnu/nios2-elf/include/sys/unistd.h" project="MappingRobotSoftware"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="terasic_includes.h" tooltip="MappingRobotSoftware/terasic_lib/terasic_includes.h">
 <persistable path="/MappingRobotSoftware/terasic_lib/terasic_includes.h"/>
 </file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="packet_buffer.h" tooltip="MappingRobotSoftware/packet_buffer.h">
+<persistable path="/MappingRobotSoftware/packet_buffer.h"/>
+</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="I2C.h" tooltip="MappingRobotSoftware/I2C.h">
 <persistable path="/MappingRobotSoftware/I2C.h"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="I2C.c" tooltip="MappingRobotSoftware/I2C.c">
-<persistable path="/MappingRobotSoftware/I2C.c"/>
-</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="hello_ucosii.c" tooltip="MappingRobotSoftware/hello_ucosii.c">
 <persistable path="/MappingRobotSoftware/hello_ucosii.c"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="LIDAR.c" tooltip="MappingRobotSoftware/LIDAR.c">
+<persistable path="/MappingRobotSoftware/LIDAR.c"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="io.h" tooltip="MappingRobotSoftware_bsp/HAL/inc/io.h">
 <persistable path="/MappingRobotSoftware_bsp/HAL/inc/io.h"/>
@@ -622,15 +629,6 @@
 </file>
 <file factoryID="org.eclipse.cdt.ui.ExternalEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="_default_fcntl.h" tooltip="/OPT/altera/12.1/tools/nios2eds/bin/gnu/H-i686-pc-linux-gnu/nios2-elf/include/sys/_default_fcntl.h">
 <persistable path="/OPT/altera/12.1/tools/nios2eds/bin/gnu/H-i686-pc-linux-gnu/nios2-elf/include/sys/_default_fcntl.h" project="MappingRobotSoftware"/>
-</file>
-<file factoryID="org.eclipse.cdt.ui.ExternalEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="fcntl.h" tooltip="/OPT/altera/12.1/tools/nios2eds/bin/gnu/H-i686-pc-linux-gnu/nios2-elf/include/sys/fcntl.h">
-<persistable path="/OPT/altera/12.1/tools/nios2eds/bin/gnu/H-i686-pc-linux-gnu/nios2-elf/include/sys/fcntl.h" project="MappingRobotSoftware"/>
-</file>
-<file factoryID="org.eclipse.cdt.ui.ExternalEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="fcntl.h" tooltip="/OPT/altera/12.1/tools/nios2eds/bin/gnu/H-i686-pc-linux-gnu/nios2-elf/include/fcntl.h">
-<persistable path="/OPT/altera/12.1/tools/nios2eds/bin/gnu/H-i686-pc-linux-gnu/nios2-elf/include/fcntl.h" project="MappingRobotSoftware"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="alt_dev.c" tooltip="MappingRobotSoftware_bsp/HAL/src/alt_dev.c">
-<persistable path="/MappingRobotSoftware_bsp/HAL/src/alt_dev.c"/>
 </file>
 </mruList>
 </workbench>
