@@ -4,6 +4,14 @@
 <scannerInfo id="org.eclipse.cdt.make.core.discoveredScannerInfo">
 <instance id="preference.org.eclipse.cdt.managedbuilder.core.configurationDataProvider.637082158;preference.org.eclipse.cdt.managedbuilder.core.configurationDataProvider.637082158.;cdt.managedbuild.tool.gnu.cpp.compiler.base.1163836561;cdt.managedbuild.tool.gnu.cpp.compiler.input.405968249">
 <collector id="org.eclipse.cdt.make.core.PerProjectSICollector">
+<includePath path="/afs/ualberta.ca/home/j/k/jkeeling/ece492/de0-project/software/MappingRobotSoftware_bsp/UCOSII/inc"/>
+<includePath path="/afs/ualberta.ca/home/j/k/jkeeling/ece492/de0-project/software/MappingRobotSoftware_bsp/HAL/inc"/>
+<includePath path="/afs/ualberta.ca/home/j/k/jkeeling/ece492/de0-project/software/MappingRobotSoftware_bsp/"/>
+<includePath path="/afs/ualberta.ca/home/j/k/jkeeling/ece492/de0-project/software/MappingRobotSoftware_bsp/drivers/inc"/>
+<includePath path="/afs/ualberta.ca/home/c/j/cjamison/ece492/de0-project/software/MappingRobotSoftware_bsp/UCOSII/inc"/>
+<includePath path="/afs/ualberta.ca/home/c/j/cjamison/ece492/de0-project/software/MappingRobotSoftware_bsp/HAL/inc"/>
+<includePath path="/afs/ualberta.ca/home/c/j/cjamison/ece492/de0-project/software/MappingRobotSoftware_bsp/"/>
+<includePath path="/afs/ualberta.ca/home/c/j/cjamison/ece492/de0-project/software/MappingRobotSoftware_bsp/drivers/inc"/>
 <includePath path="/afs/ualberta.ca/home/l/a/langen/ECE492/MappingRobot/software/MappingRobotSoftware_bsp/UCOSII/inc"/>
 <includePath path="/afs/ualberta.ca/home/l/a/langen/ECE492/MappingRobot/software/MappingRobotSoftware_bsp/HAL/inc"/>
 <includePath path="/afs/ualberta.ca/home/l/a/langen/ECE492/MappingRobot/software/MappingRobotSoftware_bsp/"/>
@@ -108,6 +116,14 @@
 </instance>
 <instance id="preference.org.eclipse.cdt.managedbuilder.core.configurationDataProvider.637082158;preference.org.eclipse.cdt.managedbuilder.core.configurationDataProvider.637082158.;cdt.managedbuild.tool.gnu.c.compiler.base.1082859872;cdt.managedbuild.tool.gnu.c.compiler.input.1097837424">
 <collector id="org.eclipse.cdt.make.core.PerProjectSICollector">
+<includePath path="/afs/ualberta.ca/home/j/k/jkeeling/ece492/de0-project/software/MappingRobotSoftware_bsp/UCOSII/inc"/>
+<includePath path="/afs/ualberta.ca/home/j/k/jkeeling/ece492/de0-project/software/MappingRobotSoftware_bsp/HAL/inc"/>
+<includePath path="/afs/ualberta.ca/home/j/k/jkeeling/ece492/de0-project/software/MappingRobotSoftware_bsp/"/>
+<includePath path="/afs/ualberta.ca/home/j/k/jkeeling/ece492/de0-project/software/MappingRobotSoftware_bsp/drivers/inc"/>
+<includePath path="/afs/ualberta.ca/home/c/j/cjamison/ece492/de0-project/software/MappingRobotSoftware_bsp/UCOSII/inc"/>
+<includePath path="/afs/ualberta.ca/home/c/j/cjamison/ece492/de0-project/software/MappingRobotSoftware_bsp/HAL/inc"/>
+<includePath path="/afs/ualberta.ca/home/c/j/cjamison/ece492/de0-project/software/MappingRobotSoftware_bsp/"/>
+<includePath path="/afs/ualberta.ca/home/c/j/cjamison/ece492/de0-project/software/MappingRobotSoftware_bsp/drivers/inc"/>
 <includePath path="/afs/ualberta.ca/home/l/a/langen/ECE492/MappingRobot/software/MappingRobotSoftware_bsp/UCOSII/inc"/>
 <includePath path="/afs/ualberta.ca/home/l/a/langen/ECE492/MappingRobot/software/MappingRobotSoftware_bsp/HAL/inc"/>
 <includePath path="/afs/ualberta.ca/home/l/a/langen/ECE492/MappingRobot/software/MappingRobotSoftware_bsp/"/>

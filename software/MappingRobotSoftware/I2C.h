@@ -48,5 +48,6 @@ bool I2C_ReadFromDeviceRegister(alt_u32 clk_base, alt_u32 data_base, alt_8 devic
 void I2C_ReadMore(alt_u32 clk_base, alt_u32 data_base, alt_u8 *pBuf, alt_u16 len, bool endRead);
 void I2C_Start(alt_u32 clk_base, alt_u32 data_base);
 void I2C_Stop(alt_u32 clk_base, alt_u32 data_base);
+bool i2c_selectAddress(alt_u32 clk_base, alt_u32 data_base, alt_8 address);
 
 #endif /*I2C_H_*/

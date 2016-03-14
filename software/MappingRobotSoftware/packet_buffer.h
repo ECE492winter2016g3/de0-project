@@ -12,8 +12,6 @@
 #define TRUE 1
 #define FALSE 0
 
-#define START_BYTE 0x2
-#define END_BYTE 0x3
 
 typedef struct {
 	char myBuf[BUF_SIZE];

@@ -4,7 +4,7 @@
  * Machine generated for CPU 'nios2_qsys' in SOPC Builder design 'niosII_system'
  * SOPC Builder design path: ../../niosII_system.sopcinfo
  *
- * Generated: Thu Feb 11 16:11:19 MST 2016
+ * Generated: Fri Mar 11 13:46:43 MST 2016
  */
 
 /*
@@ -64,7 +64,6 @@
 #include "altera_avalon_sysid_qsys.h"
 #include "altera_avalon_timer.h"
 #include "altera_avalon_uart.h"
-#include "i2c_opencores.h"
 
 /*
  * Allocate the device storage
@@ -76,7 +75,6 @@ ALTERA_AVALON_JTAG_UART_INSTANCE ( JTAG_UART, jtag_uart);
 ALTERA_AVALON_SYSID_QSYS_INSTANCE ( SYSID, sysid);
 ALTERA_AVALON_TIMER_INSTANCE ( TIMER, timer);
 ALTERA_AVALON_UART_INSTANCE ( UART_BLUETOOTH, uart_bluetooth);
-I2C_OPENCORES_INSTANCE ( I2C_OPENCORES_LIDAR, i2c_opencores_lidar);
 
 /*
  * Initialize the interrupt controller devices
@@ -104,5 +102,4 @@ void alt_sys_init( void )
     ALTERA_AVALON_JTAG_UART_INIT ( JTAG_UART, jtag_uart);
     ALTERA_AVALON_SYSID_QSYS_INIT ( SYSID, sysid);
     ALTERA_AVALON_UART_INIT ( UART_BLUETOOTH, uart_bluetooth);
-    I2C_OPENCORES_INIT ( I2C_OPENCORES_LIDAR, i2c_opencores_lidar);
 }

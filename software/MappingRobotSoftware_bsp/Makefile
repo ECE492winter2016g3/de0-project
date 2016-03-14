@@ -352,13 +352,6 @@ hal_C_LIB_SRCS := \
 	$(hal_SRCS_ROOT)/src/alt_wait.c \
 	$(hal_SRCS_ROOT)/src/alt_write.c
 
-# opencores_i2c_driver sources root 
-opencores_i2c_driver_SRCS_ROOT := drivers
-
-# opencores_i2c_driver sources 
-opencores_i2c_driver_C_LIB_SRCS := \
-	$(opencores_i2c_driver_SRCS_ROOT)/src/i2c_opencores.c
-
 # ucosii sources root 
 ucosii_SRCS_ROOT := UCOSII
 
@@ -388,7 +381,6 @@ COMPONENT_C_LIB_SRCS += \
 	$(altera_avalon_uart_driver_C_LIB_SRCS) \
 	$(altera_nios2_qsys_ucosii_driver_C_LIB_SRCS) \
 	$(hal_C_LIB_SRCS) \
-	$(opencores_i2c_driver_C_LIB_SRCS) \
 	$(ucosii_C_LIB_SRCS)
 
 # Assemble all component assembly source files 
