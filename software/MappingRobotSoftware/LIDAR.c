@@ -80,6 +80,6 @@ int read_registers() {
 	}
 	//printf("UPPER, LOWER: %i, %i\n", upper, lower);
 	range = (upper << 8) + lower;
-	printf("LIDAR range value: %i\n", range);
+	//printf("LIDAR range value: %i\n", range);
 	return range;
 }

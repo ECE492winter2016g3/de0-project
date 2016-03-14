@@ -71,7 +71,7 @@ void dc_driver_write(state) {
 /* Prints "Hello World" and sleeps for three seconds */
 void task1(void* pdata)
 {
-	int range = 0;
+	INT16U range = 0;
 //	ALTERA_AVALON_UART_STATE_INSTANCE(UART_BLUETOOTH, bluetooth_state);
 //	ALTERA_AVALON_UART_STATE_INIT(UART_BLUETOOTH, bluetooth_state);
 //	ALTERA_AVALON_UART_DEV_INSTANCE(UART_BLUETOOTH, bluetooth_dev);
@@ -112,36 +112,74 @@ void task1(void* pdata)
 //	}
 
 	for (;;) {
-		OSTimeDly(500);
-		//range = lidar_read();
+		OSTimeDly(10);
+		range = lidar_read();
 		//printf("LIDAR range: %i\n", range);
-		//IOWR(PIO_LEDS_BASE, 0, range/4);
+		int led = 8 * ((range < 100) ? range : 100) / 100;
+		int i;
+		int ledRes = 0;
+		for (i = 0; i < led; ++i) {
+			ledRes = (ledRes << 1) | 1;
+		}
+		IOWR(PIO_LEDS_BASE, 0, ledRes);
+		//
+//		mBuffer *buff = malloc(sizeof(mBuffer));
+//		char* buffData = malloc(10);
+//		buffData[0] = range & 0x00FF;
+//		buffData[1] = (range & 0xFF00) >> 8;
+//		buff->len = 2;
+//		buff->buf = buffData;
+//		OSQPost(sendQueue, buff);
+	}
+}
+
+int motora = 0;
+int motorb = 0;
+void handle_bluetooth_input(char c) {
+	c |= 0x20;
+	printf("Cmd: %c\n", c);
+	if (c == 'a') {
+		printf("a command\n");
+		motora = MOTORA_CCW;
+		dc_driver_write(motora | motorb);
+	} else if (c == 'b') {
+		motora = MOTORA_CW;
+		dc_driver_write(motora | motorb);
+	} else 	if (c == 'c') {
+		motorb = MOTORB_CCW;
+		dc_driver_write(motora | motorb);
+	} else if (c == 'd') {
+		motorb = MOTORB_CW;
+		dc_driver_write(motora | motorb);
+	} else if (c == 'e') {
+		motora = 0;
+		dc_driver_write(motora | motorb);
+	} else if (c == 'f') {
+		motorb = 0;
+		dc_driver_write(motora | motorb);
+	} else if (c == 'l') {
+		printf("l command\n");
+		IOWR_32DIRECT(STEPPER_DRIVER_0_BASE, 0, 4);
+	} else if (c == 'r') {
+		printf("r command\n");
+		IOWR_32DIRECT(STEPPER_DRIVER_0_BASE, 0, -4);
 	}
 }
 
 void task2(void* pdata)
 {
-	printf("Starting...\n");
-	IOWR_32DIRECT(STEPPER_DRIVER_0_BASE, 1, 0x00010000);
-	dc_driver_write(MOTORA_CCW | MOTORB_CCW);
-	printf("Done.\n");
-	for(;;)
-		OSTimeDly(10000);
-	//for (;;)
-	//	printf("Blah\n");
-
-	unsigned char dir = 0;
-	while (1)
-	{
-		OSTimeDlyHMSM(0, 0, 1, 0);
-
-		// Reverse and drive the motor
-		dir = ~dir;
-		if (dir) {
-			dc_driver_write(MOTORA_CCW | MOTORB_CCW);
-		} else {
-			dc_driver_write(MOTORA_CW | MOTORB_CCW);
+	printf("Started task\n");
+	// Receive input from phone
+	int err;
+	while (1) {
+		mBuffer *slice = OSQPend(receiveQueue, 0, &err);
+		printf("Got: %s\n", slice->buf);
+		size_t i;
+		for (i = 0; i < slice->len; ++i) {
+			handle_bluetooth_input(slice->buf[i]);
 		}
+		free(slice->buf);
+		free(slice);
 	}
 }
 
@@ -152,6 +190,7 @@ int main(void)
 
     INT8U err;
     initBluetooth();
+
   OSTaskCreateExt(task1,
                   NULL,
                   (void *)&task1_stk[TASK_STACKSIZE-1],
@@ -192,15 +231,15 @@ int main(void)
                   NULL,
                   0);
 
-  OSTaskCreateExt(echoTask,
-                  NULL,
-                  (void *)&task5_stk[TASK_STACKSIZE-1],
-                  TASK5_PRIORITY,
-                  TASK5_PRIORITY,
-                  task5_stk,
-                  TASK_STACKSIZE,
-                  NULL,
-                  0);
+//  OSTaskCreateExt(echoTask,
+//                  NULL,
+//                  (void *)&task5_stk[TASK_STACKSIZE-1],
+//                  TASK5_PRIORITY,
+//                  TASK5_PRIORITY,
+//                  task5_stk,
+//                  TASK_STACKSIZE,
+//                  NULL,
+//                  0);
 
   if(alt_ic_isr_register(
 				  UART_BLUETOOTH_IRQ_INTERRUPT_CONTROLLER_ID,
@@ -209,7 +248,7 @@ int main(void)
 				  NULL,
 				  NULL
   )) {
-          printf("Register failed\n");
+      printf("Register failed\n");
   }
 
   OSStart();

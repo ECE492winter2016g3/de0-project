@@ -13,6 +13,8 @@
 #include "bluetooth_helpers.h"
 #include "packet_buffer.h"
 
+//#define printf() (void)0
+
 void initBluetooth() {
 	sendQueue = OSQCreate(sendQueueBuf, SEND_QUEUE_LENGTH);
 	receiveQueue = OSQCreate(receiveQueueBuf, RECEIVE_QUEUE_LENGTH);
@@ -26,7 +28,7 @@ void send(mBuffer data) {
 
 	printf("send :: Into Loop\n");
 	while(nextByte < data.len) {
-		printf("send :: Sending byte %i: '%c'\n", nextByte, data.buf[nextByte]);
+		printf("send :: Sending byte %i: '%i'\n", nextByte, data.buf[nextByte]);
 		while(!(IORD_ALTERA_AVALON_UART_STATUS(UART_BLUETOOTH_BASE) & ALTERA_AVALON_UART_STATUS_TRDY_MSK));
 		IOWR_ALTERA_AVALON_UART_TXDATA(UART_BLUETOOTH_BASE, data.buf[nextByte++]);
 	}
@@ -50,6 +52,17 @@ void sendTask(void* pdata) {
 		buf->buf[0] = packetId++;
 		buf->buf[1] = buf->len;
 		buf->len += 2;
+		int i;
+		int newLen = buf->len;
+		for (i = 0; i < newLen; ++i) {
+			if (buf->buf[i] == 0x03 || buf->buf[i] == 0x02) {
+				memmove(buf->buf + i + 1, buf->buf + i, newLen - i);
+				buf->buf[i] = 0xFF;
+				++i;
+				++newLen;
+			}
+		}
+		buf->len = newLen;
 		printf("sendTask :: sending!\n");
 		send(*buf);
 		send(*buf);
@@ -115,3 +128,4 @@ void echoTask(void* pdata) {
 	}
 }
 
+#undef printf
