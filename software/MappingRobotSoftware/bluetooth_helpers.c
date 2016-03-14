@@ -38,7 +38,7 @@ void send(mBuffer data) {
 void sendTask(void* pdata) {
 	mBuffer* buf;
 	INT8U err;
-	unsigned char packetId = 4;
+	static unsigned char packetId = 4;
 
 	printf("sendTask :: started!\n");
 	while(1) {
@@ -46,13 +46,14 @@ void sendTask(void* pdata) {
 
 		// TODO: Send 3 times for parity checking
 
-//		memmove(buf->buf+1, buf->buf, buf->len);
-//		buf->buf[0] = 'i';
-//		buf->len++;
+		memmove(buf->buf+2, buf->buf, buf->len);
+		buf->buf[0] = packetId++;
+		buf->buf[1] = buf->len;
+		buf->len += 2;
 		printf("sendTask :: sending!\n");
 		send(*buf);
-//		send(*buf);
-//		send(*buf);
+		send(*buf);
+		send(*buf);
 
 		free(buf->buf);
 		free(buf);
