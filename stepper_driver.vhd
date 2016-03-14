@@ -45,10 +45,10 @@ architecture avalon of stepper_driver is
 	-- Current step index
 	type STEP_NUMBER is (a, b, c, d, e, f, g, h);
 	signal cur_step: STEP_NUMBER := a;
-	signal step_speed: std_logic_vector(31 downto 0) := x"007FFFFF";
+	signal step_speed: std_logic_vector(31 downto 0) := x"001FFFFF";
 	
 	-- Number of steps remaining
-	signal num_step: std_logic_vector(31 downto 0) := x"00000000";
+	signal num_step: signed(31 downto 0) := x"FFFFFF39"; --x"000000C8";
 	signal step_divisor: std_logic_vector(31 downto 0) := x"00000000";
 begin
 	process (clk) is
@@ -65,7 +65,7 @@ begin
 			-- Write handling
 			if (write = '1') then
 				if (address(0) = '0') then
-					num_step <= std_logic_vector(signed(num_step) + signed(writedata));
+					num_step <= num_step + signed(writedata);
 				else
 					step_speed <= writedata;
 				end if;
@@ -77,7 +77,7 @@ begin
 					-- Take a step
 					step_divisor <= step_speed;
 					if (num_step(31) = '1') then
-						num_step <= std_logic_vector(signed(num_step) + 1);
+						num_step <= num_step + 1;
 						case cur_step is
 							when a => cur_step <= h;
 							when b => cur_step <= a;
@@ -89,16 +89,16 @@ begin
 							when h => cur_step <= g;
 						end case;
 					else
-						num_step <= std_logic_vector(signed(num_step) - 1);
+						num_step <= num_step - 1;
 						case cur_step is
-							when a => cur_step <= h;
-							when b => cur_step <= a;
-							when c => cur_step <= b;
-							when d => cur_step <= c;
-							when e => cur_step <= d;
-							when f => cur_step <= e;
-							when g => cur_step <= f;
-							when h => cur_step <= g;
+							when a => cur_step <= b;
+							when b => cur_step <= c;
+							when c => cur_step <= d;
+							when d => cur_step <= e;
+							when e => cur_step <= f;
+							when f => cur_step <= g;
+							when g => cur_step <= h;
+							when h => cur_step <= a;
 						end case;
 					end if;
 				else
