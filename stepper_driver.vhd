@@ -19,9 +19,9 @@ entity stepper_driver is
 		rst: in std_logic;
 		
 		-- Avalon memory mapped interface
-		write: inout std_logic;
-		writedata: inout std_logic_vector(31 downto 0);
-		address: inout std_logic_vector(0 downto 0);
+		write: in std_logic;
+		writedata: in std_logic_vector(31 downto 0);
+		address: in std_logic_vector(0 downto 0);
 		
 		-- Avalon condiuts
 		c_ena: out std_logic;
