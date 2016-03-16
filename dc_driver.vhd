@@ -93,7 +93,7 @@ begin
 	process (motora) is
 	begin
 		case motora is
-			when cw => 
+			when cw =>
 				c_ain1 <= '0';
 				c_ain2 <= '1';
 			when ccw =>
@@ -108,7 +108,7 @@ begin
 	process (motorb) is
 	begin
 		case motorb is 
-			when cw => 
+			when cw =>
 				c_bin1 <= '0';
 				c_bin2 <= '1';
 			when ccw =>

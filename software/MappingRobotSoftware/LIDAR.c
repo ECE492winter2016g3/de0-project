@@ -69,13 +69,13 @@ int read_registers() {
 		I2C_Stop(I2C_SCL_BASE, I2C_SDA_BASE);
 		I2C_Start(I2C_SCL_BASE, I2C_SDA_BASE);
 		if(!I2C_ReadFromDeviceRegister(I2C_SCL_BASE, I2C_SDA_BASE, LIDAR_I2C_ADDRESS, LIDAR_REGISTER_LOWER, &lower, 1, TRUE)) {
-			printf("LOWER READ FAILED\n");
+//			printf("LOWER READ FAILED\n");
 			return FALSE;
 		}
 		I2C_Stop(I2C_SCL_BASE, I2C_SDA_BASE);
 	}
 	else {
-		printf("UPPER READ FAILED\n");
+//		printf("UPPER READ FAILED\n");
 		return FALSE;
 	}
 	//printf("UPPER, LOWER: %i, %i\n", upper, lower);

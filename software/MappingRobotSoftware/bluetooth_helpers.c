@@ -21,48 +21,57 @@ void initBluetooth() {
 	byteQueue = OSQCreate(byteQueueBuf, BYTE_QUEUE_LENGTH);
 }
 
-void send(mBuffer data) {
+void send(LenBuffer data) {
 	int nextByte = 0;
+	printf("\n");
 	while(!(IORD_ALTERA_AVALON_UART_STATUS(UART_BLUETOOTH_BASE) & ALTERA_AVALON_UART_STATUS_TRDY_MSK));
 	IOWR_ALTERA_AVALON_UART_TXDATA(UART_BLUETOOTH_BASE, START_BYTE);
 
-	printf("send :: Into Loop\n");
+	printf("send :: sending %i\n", START_BYTE);
 	while(nextByte < data.len) {
-		printf("send :: Sending byte %i: '%i'\n", nextByte, data.buf[nextByte]);
+		char byte = data.buf[nextByte++];
+//		printf("send :: Sending byte %i: '%i'\n", nextByte, byte);
+		if(byte == START_BYTE || byte == END_BYTE || byte == ESCAPE_BYTE) {
+//			printf("send :: Escaping byte %i: %i\n", nextByte, byte);
+			while(!(IORD_ALTERA_AVALON_UART_STATUS(UART_BLUETOOTH_BASE) & ALTERA_AVALON_UART_STATUS_TRDY_MSK));
+			IOWR_ALTERA_AVALON_UART_TXDATA(UART_BLUETOOTH_BASE, ESCAPE_BYTE);
+			printf("send :: sending %i\n", ESCAPE_BYTE);
+		}
 		while(!(IORD_ALTERA_AVALON_UART_STATUS(UART_BLUETOOTH_BASE) & ALTERA_AVALON_UART_STATUS_TRDY_MSK));
-		IOWR_ALTERA_AVALON_UART_TXDATA(UART_BLUETOOTH_BASE, data.buf[nextByte++]);
+		IOWR_ALTERA_AVALON_UART_TXDATA(UART_BLUETOOTH_BASE, byte);
+		printf("send :: sending %i\n", byte);
 	}
-	printf("send :: Out of Loop\n");
+	//printf("send :: Out of Loop\n");
 	while(!(IORD_ALTERA_AVALON_UART_STATUS(UART_BLUETOOTH_BASE) & ALTERA_AVALON_UART_STATUS_TRDY_MSK));
 	IOWR_ALTERA_AVALON_UART_TXDATA(UART_BLUETOOTH_BASE, END_BYTE);
+	printf("send :: sending %i\n", END_BYTE);
+	printf("\n");
 }
 
 void sendTask(void* pdata) {
-	mBuffer* buf;
+	LenBuffer* buf;
 	INT8U err;
 	static unsigned char packetId = 4;
 
 	printf("sendTask :: started!\n");
 	while(1) {
-		buf = (mBuffer*) OSQPend(sendQueue, 0, &err);
-
-		// TODO: Send 3 times for parity checking
+		buf = (LenBuffer*) OSQPend(sendQueue, 0, &err);
 
 		memmove(buf->buf+2, buf->buf, buf->len);
 		buf->buf[0] = packetId++;
 		buf->buf[1] = buf->len;
 		buf->len += 2;
-		int i;
-		int newLen = buf->len;
-		for (i = 0; i < newLen; ++i) {
-			if (buf->buf[i] == 0x03 || buf->buf[i] == 0x02) {
-				memmove(buf->buf + i + 1, buf->buf + i, newLen - i);
-				buf->buf[i] = 0xFF;
-				++i;
-				++newLen;
-			}
-		}
-		buf->len = newLen;
+//		int i;
+//		int newLen = buf->len;
+//		for (i = 0; i < newLen; ++i) {
+//			if (buf->buf[i] == 0x03 || buf->buf[i] == 0x02) {
+//				memmove(buf->buf + i + 1, buf->buf + i, newLen - i);
+//				buf->buf[i] = 0xFF;
+//				++i;
+//				++newLen;
+//			}
+//		}
+//		buf->len = newLen;
 		printf("sendTask :: sending!\n");
 		send(*buf);
 		send(*buf);
@@ -79,7 +88,7 @@ void receiveTask(void* pdata) {
 	INT8U err;
 	PacketBuffer pb;
 	init(&pb);
-	mBuffer* buf;
+	LenBuffer* buf;
 
 	printf("receiveTask :: started!\n");
 	while(1) {
@@ -94,7 +103,7 @@ void receiveTask(void* pdata) {
 			printf("End of Packet!\n");
 
 			// We have to malloc this because it's
-			buf = (mBuffer*) malloc(sizeof(mBuffer));
+			buf = (LenBuffer*) malloc(sizeof(LenBuffer));
 			buf->buf = (char*) malloc(BUF_SIZE * sizeof(char));
 			memset(buf->buf, 0, BUF_SIZE);
 			buf->len = mRead(&pb, buf->buf);

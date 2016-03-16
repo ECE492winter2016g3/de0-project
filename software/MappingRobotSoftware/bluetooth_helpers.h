@@ -13,6 +13,7 @@
 /* Bytes that signify the start and end of packets */
 #define START_BYTE 0x2
 #define END_BYTE 0x3
+#define ESCAPE_BYTE 0x4
 
 /* Queue Configuration */
 /*
@@ -44,13 +45,13 @@ void* sendQueueBuf[SEND_QUEUE_LENGTH];
 typedef struct {
 	char* buf;
 	int len;
-} mBuffer;
+} LenBuffer;
 
 // Set up queues
 void initBluetooth();
 
 // Send the data contained in the buffer
-void send(mBuffer data);
+void send(LenBuffer data);
 void sendTask(void* pdata);
 
 void receiveTask(void* pdata);

@@ -62,9 +62,19 @@ OS_STK    task5_stk[TASK_STACKSIZE];
 #define MOTORA_CCW 0x2 // 00000010
 #define MOTORB_CW  0xC // 00001100
 #define MOTORB_CCW 0x8 // 00001000
+#define MOTORA_STOP 0
+#define MOTORB_STOP 0
 void dc_driver_write(state) {
 	IOWR_32DIRECT(DC_DRIVER_0_BASE, 0, state);
 }
+
+/* DC MOTOR BT COMMANDS*/
+#define BT_CMD_FORWARD 'f'
+#define BT_CMD_BACKWARD 'b'
+#define BT_CMD_RIGHT 'r'
+#define BT_CMD_LEFT 'l'
+#define BT_CMD_STOP 's'
+#define BT_CMD_TIMEOUT 1000
 
 //#define ALTERA_AVALON_UART_TERMIOS
 
@@ -110,11 +120,12 @@ void task1(void* pdata)
 //			OSTimeDlyHMSM(0, 0, 0, t);
 //		}
 //	}
-
+	dc_driver_write(0);
+//	int testDist = 0;
 	for (;;) {
-		OSTimeDly(10);
 		range = lidar_read();
-		//printf("LIDAR range: %i\n", range);
+//		range = testDist++;
+		printf("LIDAR range: %i\n", range);
 		int led = 8 * ((range < 100) ? range : 100) / 100;
 		int i;
 		int ledRes = 0;
@@ -122,14 +133,16 @@ void task1(void* pdata)
 			ledRes = (ledRes << 1) | 1;
 		}
 		IOWR(PIO_LEDS_BASE, 0, ledRes);
-		//
-//		mBuffer *buff = malloc(sizeof(mBuffer));
-//		char* buffData = malloc(10);
-//		buffData[0] = range & 0x00FF;
-//		buffData[1] = (range & 0xFF00) >> 8;
-//		buff->len = 2;
-//		buff->buf = buffData;
-//		OSQPost(sendQueue, buff);
+
+		LenBuffer *buff = malloc(sizeof(LenBuffer));
+		char* buffData = malloc(10);
+		buffData[0] = range & 0x00FF;
+		buffData[1] = (range & 0xFF00) >> 8;
+		buff->len = 2;
+		buff->buf = buffData;
+		OSQPost(sendQueue, buff);
+		//IOWR_32DIRECT(STEPPER_DRIVER_0_BASE, 0, 200);
+		OSTimeDly(10000);
 	}
 }
 
@@ -137,32 +150,28 @@ int motora = 0;
 int motorb = 0;
 void handle_bluetooth_input(char c) {
 	c |= 0x20;
-	printf("Cmd: %c\n", c);
-	if (c == 'a') {
-		printf("a command\n");
-		motora = MOTORA_CCW;
-		dc_driver_write(motora | motorb);
-	} else if (c == 'b') {
+	//printf("Cmd: %c\n", c);
+	if (c == BT_CMD_FORWARD) {
 		motora = MOTORA_CW;
-		dc_driver_write(motora | motorb);
-	} else 	if (c == 'c') {
-		motorb = MOTORB_CCW;
-		dc_driver_write(motora | motorb);
-	} else if (c == 'd') {
 		motorb = MOTORB_CW;
 		dc_driver_write(motora | motorb);
-	} else if (c == 'e') {
-		motora = 0;
+	} else if (c == BT_CMD_BACKWARD) {
+		motora = MOTORA_CCW;
+		motorb = MOTORB_CCW;
 		dc_driver_write(motora | motorb);
-	} else if (c == 'f') {
-		motorb = 0;
+	} else 	if (c == BT_CMD_LEFT) {
+		motora = MOTORA_CW;
+		motorb = MOTORB_CCW;
 		dc_driver_write(motora | motorb);
-	} else if (c == 'l') {
-		printf("l command\n");
-		IOWR_32DIRECT(STEPPER_DRIVER_0_BASE, 0, 4);
-	} else if (c == 'r') {
-		printf("r command\n");
-		IOWR_32DIRECT(STEPPER_DRIVER_0_BASE, 0, -4);
+	} else if (c == BT_CMD_RIGHT) {
+		motora = MOTORA_CCW;
+		motorb = MOTORB_CW;
+		dc_driver_write(motora | motorb);
+	}
+	else if (c == BT_CMD_STOP) {
+		motora = MOTORA_STOP;
+		motorb = MOTORB_STOP;
+		dc_driver_write(motora | motorb);
 	}
 }
 
@@ -170,16 +179,22 @@ void task2(void* pdata)
 {
 	printf("Started task\n");
 	// Receive input from phone
-	int err;
+	INT8U err;
 	while (1) {
-		mBuffer *slice = OSQPend(receiveQueue, 0, &err);
-		printf("Got: %s\n", slice->buf);
-		size_t i;
-		for (i = 0; i < slice->len; ++i) {
-			handle_bluetooth_input(slice->buf[i]);
+		LenBuffer *slice = OSQPend(receiveQueue, BT_CMD_TIMEOUT, &err);
+		if(err == OS_ERR_TIMEOUT) {
+			//printf("TIMEOUT\n");
+			handle_bluetooth_input(BT_CMD_STOP);
 		}
-		free(slice->buf);
-		free(slice);
+		else {
+			printf("Got: %s\n", slice->buf);
+			size_t i;
+			for (i = 0; i < slice->len; ++i) {
+				handle_bluetooth_input(slice->buf[i]);
+			}
+			free(slice->buf);
+			free(slice);
+		}
 	}
 }
 
