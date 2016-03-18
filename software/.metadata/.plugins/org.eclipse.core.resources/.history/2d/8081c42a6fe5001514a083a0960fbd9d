@@ -1,0 +1,38 @@
+/*
+ * bluetooth_helpers.c
+ *
+ *  Created on: Mar 8, 2016
+ *      Author: cjamison
+ */
+
+#include <system.h>
+#include <altera_avalon_uart_regs.h>
+#include "bluetooth_helpers.h"
+
+void initBluetooth() {
+
+}
+
+void send(mBuffer data) {
+	while(!(IORD_ALTERA_AVALON_UART_STATUS(UART_BLUETOOTH_BASE) & ALTERA_AVALON_UART_STATUS_TRDY_MSK));
+	IOWR_ALTERA_AVALON_UART_TXDATA(UART_BLUETOOTH_BASE, START_BYTE);
+
+	printf("Task 4 :: Into Loop\n");
+	while(nextByte < buf.len) {
+		printf("Task 4 :: Sending byte %i: '%i'\n", nextByte, buf.buf[nextByte]);
+		while(!(IORD_ALTERA_AVALON_UART_STATUS(UART_BLUETOOTH_BASE) & ALTERA_AVALON_UART_STATUS_TRDY_MSK));
+		IOWR_ALTERA_AVALON_UART_TXDATA(UART_BLUETOOTH_BASE, buf.buf[nextByte++]);
+	}
+	printf("Task 4 :: Out of Loop\n");
+	while(!(IORD_ALTERA_AVALON_UART_STATUS(UART_BLUETOOTH_BASE) & ALTERA_AVALON_UART_STATUS_TRDY_MSK));
+	IOWR_ALTERA_AVALON_UART_TXDATA(UART_BLUETOOTH_BASE, END_BYTE);
+}
+
+void receiveTask(void* pdata) {
+
+}
+
+static void bluetoothIRQ(void* context) {
+
+}
+

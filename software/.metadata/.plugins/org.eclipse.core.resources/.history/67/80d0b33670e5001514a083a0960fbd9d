@@ -1,0 +1,44 @@
+/*
+ * bluetooth_helpers.c
+ *
+ *  Created on: Mar 8, 2016
+ *      Author: cjamison
+ */
+
+#include <system.h>
+#include <altera_avalon_uart_regs.h>
+#include "bluetooth_helpers.h"
+
+void initBluetooth() {
+	INT8U err;
+
+	messageQueue = OSQCreate(messageQueueBuf, MESSAGE_QUEUE_LENGTH);
+	packetQueue = OSQCreate(packetQueueBuf, PACKET_QUEUE_LENGTH);
+}
+
+void send(mBuffer data) {
+	int nextByte = 0;
+	while(!(IORD_ALTERA_AVALON_UART_STATUS(UART_BLUETOOTH_BASE) & ALTERA_AVALON_UART_STATUS_TRDY_MSK));
+	IOWR_ALTERA_AVALON_UART_TXDATA(UART_BLUETOOTH_BASE, START_BYTE);
+
+	printf("Send :: Into Loop\n");
+	while(nextByte < data.len) {
+		printf("Task 4 :: Sending byte %i: '%c'\n", nextByte, data.buf[nextByte]);
+		while(!(IORD_ALTERA_AVALON_UART_STATUS(UART_BLUETOOTH_BASE) & ALTERA_AVALON_UART_STATUS_TRDY_MSK));
+		IOWR_ALTERA_AVALON_UART_TXDATA(UART_BLUETOOTH_BASE, data.buf[nextByte++]);
+	}
+	printf("Send :: Out of Loop\n");
+	while(!(IORD_ALTERA_AVALON_UART_STATUS(UART_BLUETOOTH_BASE) & ALTERA_AVALON_UART_STATUS_TRDY_MSK));
+	IOWR_ALTERA_AVALON_UART_TXDATA(UART_BLUETOOTH_BASE, END_BYTE);
+}
+
+void receiveTask(void* pdata) {
+
+}
+
+static void bluetoothIRQ(void* context) {
+	char read;
+	read = IORD_ALTERA_AVALON_UART_RXDATA(UART_BLUETOOTH_BASE);
+	OSQPost(packetQueue, (void*) read);
+}
+

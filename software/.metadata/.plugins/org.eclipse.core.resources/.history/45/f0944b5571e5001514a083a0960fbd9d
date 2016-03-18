@@ -1,0 +1,46 @@
+/*
+ * bluetooth_helpers.h
+ *
+ *  Created on: Mar 8, 2016
+ *      Author: cjamison
+ */
+
+#ifndef BLUETOOTH_HELPERS_H_
+#define BLUETOOTH_HELPERS_H_
+
+/* Bytes that signify the start and end of packets */
+#define START_BYTE 0x2
+#define END_BYTE 0x3
+
+/* Queue Configuration */
+// TODO: Make sure QUEUE_LENGTH is big enough for packets being sent
+// Needs to be able to contain roughly an entire packet at once
+// because the interrupts get fired in rapid succession when a packet
+// is sent, before the task has a chance to empty it out.
+// TODO: Maybe rethink what data structure we're using here
+#define BYTE_QUEUE_LENGTH 256
+OS_EVENT* byteQueue;
+void* byteQueueBuf[BYTE_QUEUE_LENGTH];
+
+#define MESSAGE_QUEUE_LENGTH 10
+OS_EVENT* messageQueue;
+void* messageQueueBuf[MESSAGE_QUEUE_LENGTH];
+
+/* Custom buffer with length */
+typedef struct {
+	char* buf;
+	int len
+} mBuffer;
+
+// Set up queues
+void initBluetooth();
+
+// Send the data contained in the buffer
+void send(mBuffer data);
+void sendTask(void* pdata);
+
+void receiveTask(void* pdata);
+static void bluetoothIRQ(void* context);
+
+
+#endif /* BLUETOOTH_HELPERS_H_ */

@@ -121,10 +121,10 @@ void task1(void* pdata)
 //		}
 //	}
 	dc_driver_write(0);
-//	int testDist = 0;
+	int testDist = 0;
 	for (;;) {
-		range = lidar_read();
-//		range = testDist++;
+		//range = lidar_read();
+		range = testDist++;
 		printf("LIDAR range: %i\n", range);
 		int led = 8 * ((range < 100) ? range : 100) / 100;
 		int i;
@@ -132,7 +132,7 @@ void task1(void* pdata)
 		for (i = 0; i < led; ++i) {
 			ledRes = (ledRes << 1) | 1;
 		}
-		IOWR(PIO_LEDS_BASE, 0, ledRes);
+		//IOWR(PIO_LEDS_BASE, 0, ledRes);
 
 		LenBuffer *buff = malloc(sizeof(LenBuffer));
 		char* buffData = malloc(10);
@@ -142,7 +142,10 @@ void task1(void* pdata)
 		buff->buf = buffData;
 		OSQPost(sendQueue, buff);
 		//IOWR_32DIRECT(STEPPER_DRIVER_0_BASE, 0, 200);
+		IOWR(PIO_LEDS_BASE, 0, 0xcc);
 		OSTimeDly(10000);
+
+
 	}
 }
 

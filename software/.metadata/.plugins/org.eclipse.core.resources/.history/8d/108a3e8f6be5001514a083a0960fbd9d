@@ -1,0 +1,22 @@
+/*
+ * bluetooth_helpers.h
+ *
+ *  Created on: Mar 8, 2016
+ *      Author: cjamison
+ */
+
+#ifndef BLUETOOTH_HELPERS_H_
+#define BLUETOOTH_HELPERS_H_
+
+/* Custom buffer with length */
+typedef struct {
+	char* buf;
+	int len
+} mBuffer;
+
+void send(mBuffer data);
+void receiveTask(void* pdata);
+
+
+
+#endif /* BLUETOOTH_HELPERS_H_ */
