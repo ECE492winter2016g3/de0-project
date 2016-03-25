@@ -13,6 +13,7 @@ void init(PacketBuffer* pb) {
 	pb->myStart = 0;
 	pb->myEnd = 0;
 	pb->myLen = 0;
+	pb->isStarted = 0;
 }
 
 int push(PacketBuffer* pb, char* inBuf, int len) {
@@ -45,6 +46,7 @@ int pushChar(PacketBuffer* pb, char in) {
 int mRead(PacketBuffer* pb, char* outBuf) {
 	int i;
 	int index;
+//	printf("PacketBuffer :: mRead length: %i\n", pb->myLen);
 	for(i = 0; i < pb->myLen; ++i) {
 		index = (pb->myStart + i) % BUF_SIZE;
 		outBuf[i] = pb->myBuf[index];
@@ -54,5 +56,5 @@ int mRead(PacketBuffer* pb, char* outBuf) {
 
 void clear(PacketBuffer* pb) {
 	pb->myLen = 0;
-	pb->myStart = pb->myEnd;
+	pb->myStart = pb->myEnd = 0;
 }

@@ -48,20 +48,20 @@ OS_STK    task5_stk[TASK_STACKSIZE];
 
 /* Definition of Task Priorities */
 
-#define TASK1_PRIORITY      1
-#define TASK2_PRIORITY      2
-#define TASK3_PRIORITY      3
-#define TASK4_PRIORITY      4
+#define TASK1_PRIORITY      4
+#define TASK2_PRIORITY      3
+#define TASK3_PRIORITY      2
+#define TASK4_PRIORITY      1
 #define TASK5_PRIORITY      5
 
 /* DC Driver API */
 // EG: dc_driver_write(MOTORA_CW | MOTORB_CCW)
 //     dc_driver_write(MOTORB_CW)
 // (Note: All unreferenced motors are set to brake)
-#define MOTORA_CW  0x3 // 00000011
-#define MOTORA_CCW 0x2 // 00000010
-#define MOTORB_CW  0xC // 00001100
-#define MOTORB_CCW 0x8 // 00001000
+#define MOTORA_CW  0x2 // 00000010
+#define MOTORA_CCW 0x3 // 00000011
+#define MOTORB_CW  0x8 // 00001000
+#define MOTORB_CCW 0xC // 00001100
 #define MOTORA_STOP 0
 #define MOTORB_STOP 0
 void dc_driver_write(state) {
@@ -79,6 +79,15 @@ void dc_driver_write(state) {
 //#define ALTERA_AVALON_UART_TERMIOS
 
 /* Prints "Hello World" and sleeps for three seconds */
+int receiveCount = 0x01;
+int currentCommand = 0x00;
+int currentLights = 0x00;
+
+
+char charInter = 0;
+char charRecv = 0;
+char curCommand = 0;
+
 void task1(void* pdata)
 {
 	INT16U range = 0;
@@ -121,31 +130,35 @@ void task1(void* pdata)
 //		}
 //	}
 	dc_driver_write(0);
-	int testDist = 0;
+//	int testDist = 0;
 	for (;;) {
-		//range = lidar_read();
-		range = testDist++;
-		printf("LIDAR range: %i\n", range);
-		int led = 8 * ((range < 100) ? range : 100) / 100;
-		int i;
-		int ledRes = 0;
-		for (i = 0; i < led; ++i) {
-			ledRes = (ledRes << 1) | 1;
-		}
-		//IOWR(PIO_LEDS_BASE, 0, ledRes);
-
-		LenBuffer *buff = malloc(sizeof(LenBuffer));
-		char* buffData = malloc(10);
-		buffData[0] = range & 0x00FF;
-		buffData[1] = (range & 0xFF00) >> 8;
-		buff->len = 2;
-		buff->buf = buffData;
-		OSQPost(sendQueue, buff);
-		//IOWR_32DIRECT(STEPPER_DRIVER_0_BASE, 0, 200);
-		IOWR(PIO_LEDS_BASE, 0, 0xcc);
-		OSTimeDly(10000);
-
-
+//		range = lidar_read();
+////		range = testDist++;
+//		printf("LIDAR range: %i\n", range);
+//		int led = 8 * ((range < 100) ? range : 100) / 100;
+//		int i;
+//		int ledRes = 0;
+//		for (i = 0; i < led; ++i) {
+//			ledRes = (ledRes << 1) | 1;
+//		}
+//		//IOWR(PIO_LEDS_BASE, 0, ledRes);
+//
+//		LenBuffer *buff = malloc(sizeof(LenBuffer));
+//		char* buffData = malloc(10);
+//		buffData[0] = range & 0x00FF;
+//		buffData[1] = (range & 0xFF00) >> 8;
+//		buff->len = 2;
+//		buff->buf = buffData;
+//		OSQPost(sendQueue, buff);
+//		//IOWR_32DIRECT(STEPPER_DRIVER_0_BASE, 0, 200);
+////		IOWR(PIO_LEDS_BASE, 0, 0xcc);
+		OSTimeDly(100);
+//		IOWR(PIO_LEDS_BASE, 0, receiveCount | currentCommand | currentLights);
+//		if(currentLights == 0x80) {
+//			currentLights = 0x00;
+//		} else {
+//			currentLights = 0x80;
+//		}
 	}
 }
 
@@ -180,17 +193,49 @@ void handle_bluetooth_input(char c) {
 
 void task2(void* pdata)
 {
-	printf("Started task\n");
+//	printf("Started task\n");
 	// Receive input from phone
 	INT8U err;
 	while (1) {
+//		IOWR(PIO_LEDS_BASE, 0, receiveCount | currentCommand | currentLights);
 		LenBuffer *slice = OSQPend(receiveQueue, BT_CMD_TIMEOUT, &err);
+//		printf("ReceiveCount: %i\n", receiveCount);
 		if(err == OS_ERR_TIMEOUT) {
 			//printf("TIMEOUT\n");
 			handle_bluetooth_input(BT_CMD_STOP);
+//			receiveCount = receiveCount << 1;
+//			receiveCount &= 0xF;
+//			if(receiveCount == 0) {
+//				receiveCount = 1;
+//			}
+			curCommand = 0xE0;
+			IOWR_8DIRECT(PIO_LEDS_BASE, 0, charInter | charRecv | curCommand);
 		}
 		else {
-			printf("Got: %s\n", slice->buf);
+			receiveCount = receiveCount << 1;
+			receiveCount &= 0xF;
+			if(receiveCount == 0) {
+				receiveCount = 1;
+			}
+			if(slice->len > 0) {
+				if(slice->buf[0] == BT_CMD_FORWARD) {
+					currentCommand = 0x10;
+				} else if(slice->buf[0] == BT_CMD_BACKWARD) {
+					currentCommand = 0x20;
+				} else if(slice->buf[0] == BT_CMD_LEFT) {
+					currentCommand = 0x40;
+				} else if(slice->buf[0] == BT_CMD_RIGHT) {
+					currentCommand = 0x80;
+				} else if(slice->buf[0] == BT_CMD_STOP) {
+					currentCommand = 0x70;
+				} else {
+					printf("Command: |%c|\n", slice->buf[0]);
+					currentCommand = 0xF0;
+				}
+				curCommand = currentCommand;
+				IOWR_8DIRECT(PIO_LEDS_BASE, 0, charInter | charRecv | curCommand);
+			}
+//			printf("Got: %s\n", slice->buf);
 			size_t i;
 			for (i = 0; i < slice->len; ++i) {
 				handle_bluetooth_input(slice->buf[i]);
@@ -207,7 +252,29 @@ int main(void)
 	printf("Starting?\n");
 
     INT8U err;
-    initBluetooth();
+    if(initBluetooth()) {
+    	  err = OSTaskCreateExt(sendTask,
+    	                  NULL,
+    	                  (void *)&task3_stk[TASK_STACKSIZE-1],
+    	                  TASK3_PRIORITY,
+    	                  TASK3_PRIORITY,
+    	                  task3_stk,
+    	                  TASK_STACKSIZE,
+    	                  NULL,
+    	                  0);
+
+    	  OSTaskCreateExt(receiveTask,
+    	                  NULL,
+    	                  (void *)&task4_stk[TASK_STACKSIZE-1],
+    	                  TASK4_PRIORITY,
+    	                  TASK4_PRIORITY,
+    	                  task4_stk,
+    	                  TASK_STACKSIZE,
+    	                  NULL,
+    	                  0);
+    } else {
+    	IOWR(PIO_LEDS_BASE, 0, 0xEE);
+    }
 
   OSTaskCreateExt(task1,
                   NULL,
@@ -218,7 +285,7 @@ int main(void)
                   TASK_STACKSIZE,
                   NULL,
                   0);
-
+//
   OSTaskCreateExt(task2,
                   NULL,
                   (void *)&task2_stk[TASK_STACKSIZE-1],
@@ -229,25 +296,6 @@ int main(void)
                   NULL,
                   0);
 
-  err = OSTaskCreateExt(sendTask,
-                  NULL,
-                  (void *)&task3_stk[TASK_STACKSIZE-1],
-                  TASK3_PRIORITY,
-                  TASK3_PRIORITY,
-                  task3_stk,
-                  TASK_STACKSIZE,
-                  NULL,
-                  0);
-
-  OSTaskCreateExt(receiveTask,
-                  NULL,
-                  (void *)&task4_stk[TASK_STACKSIZE-1],
-                  TASK4_PRIORITY,
-                  TASK4_PRIORITY,
-                  task4_stk,
-                  TASK_STACKSIZE,
-                  NULL,
-                  0);
 
 //  OSTaskCreateExt(echoTask,
 //                  NULL,

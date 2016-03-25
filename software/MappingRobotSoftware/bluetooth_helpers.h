@@ -48,7 +48,7 @@ typedef struct {
 } LenBuffer;
 
 // Set up queues
-void initBluetooth();
+int initBluetooth();
 
 // Send the data contained in the buffer
 void send(LenBuffer data);

@@ -15,19 +15,24 @@
 
 //#define printf() (void)0
 
-void initBluetooth() {
+int initBluetooth() {
 	sendQueue = OSQCreate(sendQueueBuf, SEND_QUEUE_LENGTH);
 	receiveQueue = OSQCreate(receiveQueueBuf, RECEIVE_QUEUE_LENGTH);
 	byteQueue = OSQCreate(byteQueueBuf, BYTE_QUEUE_LENGTH);
+	if(sendQueue == (OS_EVENT*) 0 || receiveQueue == (OS_EVENT*) 0 || byteQueue == (OS_EVENT*) 0 ) {
+		return 0;
+	} else {
+		return 1;
+	}
 }
 
 void send(LenBuffer data) {
 	int nextByte = 0;
-	printf("\n");
+	printf("send :: start of send\n");
 	while(!(IORD_ALTERA_AVALON_UART_STATUS(UART_BLUETOOTH_BASE) & ALTERA_AVALON_UART_STATUS_TRDY_MSK));
 	IOWR_ALTERA_AVALON_UART_TXDATA(UART_BLUETOOTH_BASE, START_BYTE);
 
-	printf("send :: sending %i\n", START_BYTE);
+//	printf("send :: sending %i\n", START_BYTE);
 	while(nextByte < data.len) {
 		char byte = data.buf[nextByte++];
 //		printf("send :: Sending byte %i: '%i'\n", nextByte, byte);
@@ -45,7 +50,7 @@ void send(LenBuffer data) {
 	while(!(IORD_ALTERA_AVALON_UART_STATUS(UART_BLUETOOTH_BASE) & ALTERA_AVALON_UART_STATUS_TRDY_MSK));
 	IOWR_ALTERA_AVALON_UART_TXDATA(UART_BLUETOOTH_BASE, END_BYTE);
 	printf("send :: sending %i\n", END_BYTE);
-	printf("\n");
+	printf("send :: end of send\n");
 }
 
 void sendTask(void* pdata) {
@@ -83,6 +88,10 @@ void sendTask(void* pdata) {
 
 }
 
+char count = 0;
+extern char charInter;
+extern char charRecv;
+extern char curCommand;
 void receiveTask(void* pdata) {
 	char byte = '1';
 	INT8U err;
@@ -90,40 +99,94 @@ void receiveTask(void* pdata) {
 	init(&pb);
 	LenBuffer* buf;
 
-	printf("receiveTask :: started!\n");
+	printf("ReceiveTask :: started!\n");
 	while(1) {
-		printf("receiveTask :: waiting on queue!\n");
+//		printf("ReceiveTask :: waiting on queue!\n");
 		byte = (char) OSQPend(byteQueue, 0, &err);
-		printf("Received: %c\n", byte);
-		if(byte == START_BYTE) {
-			printf("Start of Packet!\n");
-			clear(&pb);
+//		IOWR_8DIRECT(PIO_LEDS_BASE, 0, --count);
 
-		} else if(byte == END_BYTE) {
-			printf("End of Packet!\n");
-
-			// We have to malloc this because it's
-			buf = (LenBuffer*) malloc(sizeof(LenBuffer));
-			buf->buf = (char*) malloc(BUF_SIZE * sizeof(char));
-			memset(buf->buf, 0, BUF_SIZE);
-			buf->len = mRead(&pb, buf->buf);
-
-			printf("Packet Contents: %s\n", buf->buf);
-			OSQPost(receiveQueue, (void*) buf);
-		} else {
-			if(pushChar(&pb, byte)) {
-				printf("Putting char: %c\n", byte);
+		if(byte != START_BYTE && byte != END_BYTE) {
+			if(byte == 'f') {
+				charRecv = 0x4;
+			} else if(byte == 'b') {
+				charRecv = 0x4;
+			} else if(byte == 'l') {
+				charRecv = 0x4;
+			} else if(byte == 'r') {
+				charRecv = 0x4;
+			} else if(byte == 's') {
+				charRecv = 0x8;
 			} else {
-				printf("No room in buffer!\n");
+				charRecv = 0;
+			}
+			IOWR_8DIRECT(PIO_LEDS_BASE, 0, charInter | charRecv | curCommand);
+		}
+		if(err != OS_NO_ERR) {
+			printf("ReceiveTask :: ERROR: %i", err);
+			charRecv = 0xE0;
+			IOWR_8DIRECT(PIO_LEDS_BASE, 0, charInter | charRecv | curCommand);
+			continue;
+		}
+		printf("ReceiveTask :: Received: %i\n", byte);
+		if(byte == START_BYTE) {
+//			printf("ReceiveTask :: START_BYTE\n");
+			clear(&pb);
+			pb.isStarted = 1;
+		} else if(byte == END_BYTE) {
+//			printf("ReceiveTask :: END_BYTE\n");
+			if(pb.isStarted) {
+				// We have to malloc this because it's
+				buf = (LenBuffer*) malloc(sizeof(LenBuffer));
+				buf->buf = (char*) malloc(BUF_SIZE * sizeof(char));
+				memset(buf->buf, 0, BUF_SIZE);
+				buf->len = mRead(&pb, buf->buf);
+				pb.isStarted = 0;
+
+//				printf("ReceiveTask :: Packet Contents: %s\n", buf->buf);
+				OSQPost(receiveQueue, (void*) buf);
+			}
+
+		} else {
+			if(pb.isStarted) {
+				if(pushChar(&pb, byte)) {
+//					printf("ReceiveTask :: %i\n", byte);
+				} else {
+//					printf("ReceiveTask :: No room in buffer!\n");
+				}
+			} else {
+//				printf("ReceiveTask :: %i - discarded\n", byte);
 			}
 		}
 	}
 }
 
+char first = 0;
 void bluetoothIRQ(void* context) {
-	char read;
+	char read = 0;
+	while(!(IORD_ALTERA_AVALON_UART_STATUS(UART_BLUETOOTH_BASE) & ALTERA_AVALON_UART_STATUS_RRDY_MSK));
 	read = IORD_ALTERA_AVALON_UART_RXDATA(UART_BLUETOOTH_BASE);
-	OSQPost(byteQueue, (void*) read);
+	if(read == -1) {
+
+	} else {
+		if(read != START_BYTE && read != END_BYTE) {
+			if(read == 'f') {
+				charInter = 0x1;
+			} else if(read == 'b') {
+				charInter = 0x1;
+			} else if(read == 'l') {
+				charInter = 0x1;
+			} else if(read == 'r') {
+				charInter = 0x1;
+			} else if(read == 's') {
+				charInter = 0x2;
+			} else {
+				charInter = 0;
+			}
+			IOWR_8DIRECT(PIO_LEDS_BASE, 0, charInter | charRecv | curCommand);
+		}
+//		IOWR_8DIRECT(PIO_LEDS_BASE, 0, ++count);
+		OSQPost(byteQueue, (void*) read);
+	}
 }
 
 void echoTask(void* pdata) {

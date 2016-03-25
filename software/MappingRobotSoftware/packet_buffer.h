@@ -18,6 +18,7 @@ typedef struct {
 	int myStart;
 	int myEnd;
 	int myLen;
+	int isStarted;
 } PacketBuffer;
 
 void init(PacketBuffer* pb);
