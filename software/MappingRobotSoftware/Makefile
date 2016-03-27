@@ -142,7 +142,6 @@ ACDS_VERSION := 12.1sp1
 ELF := MappingRobotSoftware.elf
 
 # Paths to C, C++, and assembly source files.
-C_SRCS += hello_ucosii.c
 C_SRCS += I2C.c
 C_SRCS += terasic_lib/accelerometer_adxl345_spi.c
 C_SRCS += terasic_lib/flash.c
@@ -150,6 +149,7 @@ C_SRCS += terasic_lib/terasic_spi.c
 C_SRCS += packet_buffer.c
 C_SRCS += bluetooth_helpers.c
 C_SRCS += LIDAR.c
+C_SRCS += main.c
 CXX_SRCS :=
 ASM_SRCS :=
 
