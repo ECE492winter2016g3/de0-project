@@ -13,7 +13,7 @@ sof2flash --input="/afs/ualberta.ca/home/c/j/cjamison/ece492/de0-project/output_
 #
 # Programming File: "../flash/MappingRobot_epcs_flash_controller_0.flash" To Device: epcs_flash_controller_0
 #
-nios2-flash-programmer "../flash/MappingRobot_epcs_flash_controller_0.flash" --base=0x1011000 --epcs --sidp=0x10120A8 --id=0x0 --timestamp=1458335708 --device=1 --instance=0 '--cable=USB-Blaster on localhost [2-1.6]' --program --erase-all 
+nios2-flash-programmer "../flash/MappingRobot_epcs_flash_controller_0.flash" --base=0x1011000 --epcs --sidp=0x10120A8 --id=0x0 --timestamp=1458946687 --device=1 --instance=0 '--cable=USB-Blaster on localhost [2-1.6]' --program --erase-all 
 
 #
 # Converting ELF File: MappingRobotSoftware.elf to: "../flash/MappingRobotSoftware_epcs_flash_controller_0.flash"
@@ -23,5 +23,5 @@ elf2flash --input="MappingRobotSoftware.elf" --output="../flash/MappingRobotSoft
 #
 # Programming File: "../flash/MappingRobotSoftware_epcs_flash_controller_0.flash" To Device: epcs_flash_controller_0
 #
-nios2-flash-programmer "../flash/MappingRobotSoftware_epcs_flash_controller_0.flash" --base=0x1011000 --epcs --sidp=0x10120A8 --id=0x0 --timestamp=1458335708 --device=1 --instance=0 '--cable=USB-Blaster on localhost [2-1.6]' --program 
+nios2-flash-programmer "../flash/MappingRobotSoftware_epcs_flash_controller_0.flash" --base=0x1011000 --epcs --sidp=0x10120A8 --id=0x0 --timestamp=1458946687 --device=1 --instance=0 '--cable=USB-Blaster on localhost [2-1.6]' --program 
 

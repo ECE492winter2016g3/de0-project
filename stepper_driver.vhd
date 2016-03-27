@@ -45,7 +45,7 @@ architecture avalon of stepper_driver is
 	-- Current step index
 	type STEP_NUMBER is (a, b, c, d, e, f, g, h);
 	signal cur_step: STEP_NUMBER := a;
-	signal step_speed: std_logic_vector(31 downto 0) := x"001FFFFF";
+	signal step_speed: std_logic_vector(31 downto 0) := x"0001FFFF";
 	
 	-- Number of steps remaining
 	signal num_step: signed(31 downto 0) := x"FFFFFF39"; --x"000000C8";

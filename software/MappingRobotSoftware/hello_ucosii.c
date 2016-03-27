@@ -87,78 +87,38 @@ int currentLights = 0x00;
 char charInter = 0;
 char charRecv = 0;
 char curCommand = 0;
+char sendCount = 0;
 
 void task1(void* pdata)
 {
 	INT16U range = 0;
-//	ALTERA_AVALON_UART_STATE_INSTANCE(UART_BLUETOOTH, bluetooth_state);
-//	ALTERA_AVALON_UART_STATE_INIT(UART_BLUETOOTH, bluetooth_state);
-//	ALTERA_AVALON_UART_DEV_INSTANCE(UART_BLUETOOTH, bluetooth_dev);
-//	ALTERA_AVALON_UART_DEV_INIT(UART_BLUETOOTH, bluetooth_dev);
-////	alt_fd* fd = bluetooth_dev->dev->open();
-//
-//	int fd = open(UART_BLUETOOTH_NAME, O_RDWR | O_NONBLOCK);
-//	altera_avalon_uart_write_fd(fd, "TEST", 4);
-//
-//
-//
-//	IOWR(PIO_LEDS_BASE, 0, 0xFF);
-//	printf("LEDs are changing\n");
 
-//	int i = 0;
-//	for (; ++i;) {
-//		int j = 0;
-//		OSTimeDlyHMSM(0, 0, 1, 0);
-//		for (;j < 25; ++j) {
-//			int t = 2;
-//			IOWR_32DIRECT(STEPPER_DRIVER_BASE, 0, 0x00000008); // 1000
-//			OSTimeDlyHMSM(0, 0, 0, t);
-//			IOWR_32DIRECT(STEPPER_DRIVER_BASE, 0, 0x0000000A); // 1010
-//			OSTimeDlyHMSM(0, 0, 0, t);
-//			IOWR_32DIRECT(STEPPER_DRIVER_BASE, 0, 0x00000002); // 0010
-//			OSTimeDlyHMSM(0, 0, 0, t);
-//			IOWR_32DIRECT(STEPPER_DRIVER_BASE, 0, 0x0000000E); // 1110
-//			OSTimeDlyHMSM(0, 0, 0, t);
-//			IOWR_32DIRECT(STEPPER_DRIVER_BASE, 0, 0x0000000C); // 1100
-//			OSTimeDlyHMSM(0, 0, 0, t);
-//			IOWR_32DIRECT(STEPPER_DRIVER_BASE, 0, 0x0000000F); // 1111
-//			OSTimeDlyHMSM(0, 0, 0, t);
-//			IOWR_32DIRECT(STEPPER_DRIVER_BASE, 0, 0x00000003); // 0011
-//			OSTimeDlyHMSM(0, 0, 0, t);
-//			IOWR_32DIRECT(STEPPER_DRIVER_BASE, 0, 0x0000000B); // 1011
-//			OSTimeDlyHMSM(0, 0, 0, t);
-//		}
-//	}
 	dc_driver_write(0);
-//	int testDist = 0;
+
+	int totalSteps = 90;
+	int steps = totalSteps;
+	int direction = 2;
+
 	for (;;) {
-//		range = lidar_read();
-////		range = testDist++;
-//		printf("LIDAR range: %i\n", range);
-//		int led = 8 * ((range < 100) ? range : 100) / 100;
-//		int i;
-//		int ledRes = 0;
-//		for (i = 0; i < led; ++i) {
-//			ledRes = (ledRes << 1) | 1;
-//		}
-//		//IOWR(PIO_LEDS_BASE, 0, ledRes);
-//
-//		LenBuffer *buff = malloc(sizeof(LenBuffer));
-//		char* buffData = malloc(10);
-//		buffData[0] = range & 0x00FF;
-//		buffData[1] = (range & 0xFF00) >> 8;
-//		buff->len = 2;
-//		buff->buf = buffData;
-//		OSQPost(sendQueue, buff);
-//		//IOWR_32DIRECT(STEPPER_DRIVER_0_BASE, 0, 200);
-////		IOWR(PIO_LEDS_BASE, 0, 0xcc);
-		OSTimeDly(100);
-//		IOWR(PIO_LEDS_BASE, 0, receiveCount | currentCommand | currentLights);
-//		if(currentLights == 0x80) {
-//			currentLights = 0x00;
-//		} else {
-//			currentLights = 0x80;
-//		}
+		// 20ms delay built-in
+		range = lidar_read();
+
+		// Send lidar distance
+		LenBuffer *buff = malloc(sizeof(LenBuffer));
+		char* buffData = malloc(10);
+		buffData[0] = range & 0x00FF;
+		buffData[1] = (range & 0xFF00) >> 8;
+		buff->len = 2;
+		buff->buf = buffData;
+		++sendCount;
+		OSQPost(sendQueue, buff);
+
+		// Rotate stepper, change direction
+		IOWR_32DIRECT(STEPPER_DRIVER_0_BASE, 0, direction);
+		if(!steps--) {
+			steps = totalSteps;
+			direction = -direction;
+		}
 	}
 }
 
@@ -166,7 +126,7 @@ int motora = 0;
 int motorb = 0;
 void handle_bluetooth_input(char c) {
 	c |= 0x20;
-	//printf("Cmd: %c\n", c);
+
 	if (c == BT_CMD_FORWARD) {
 		motora = MOTORA_CW;
 		motorb = MOTORB_CW;
@@ -193,49 +153,39 @@ void handle_bluetooth_input(char c) {
 
 void task2(void* pdata)
 {
-//	printf("Started task\n");
-	// Receive input from phone
 	INT8U err;
 	while (1) {
-//		IOWR(PIO_LEDS_BASE, 0, receiveCount | currentCommand | currentLights);
 		LenBuffer *slice = OSQPend(receiveQueue, BT_CMD_TIMEOUT, &err);
-//		printf("ReceiveCount: %i\n", receiveCount);
 		if(err == OS_ERR_TIMEOUT) {
-			//printf("TIMEOUT\n");
 			handle_bluetooth_input(BT_CMD_STOP);
-//			receiveCount = receiveCount << 1;
-//			receiveCount &= 0xF;
-//			if(receiveCount == 0) {
-//				receiveCount = 1;
-//			}
-			curCommand = 0xE0;
-			IOWR_8DIRECT(PIO_LEDS_BASE, 0, charInter | charRecv | curCommand);
+			curCommand = 0x00;
+
+			// Debug LEDs for command from bluetooth
+			IOWR_8DIRECT(PIO_LEDS_BASE, 0, charInter | charRecv | curCommand | (sendCount << 4));
 		}
 		else {
-			receiveCount = receiveCount << 1;
-			receiveCount &= 0xF;
-			if(receiveCount == 0) {
-				receiveCount = 1;
-			}
 			if(slice->len > 0) {
+
+				// Debug stuff for LEDs
 				if(slice->buf[0] == BT_CMD_FORWARD) {
-					currentCommand = 0x10;
+					currentCommand = 0x04;
 				} else if(slice->buf[0] == BT_CMD_BACKWARD) {
-					currentCommand = 0x20;
+					currentCommand = 0x04;
 				} else if(slice->buf[0] == BT_CMD_LEFT) {
-					currentCommand = 0x40;
+					currentCommand = 0x04;
 				} else if(slice->buf[0] == BT_CMD_RIGHT) {
-					currentCommand = 0x80;
+					currentCommand = 0x04;
 				} else if(slice->buf[0] == BT_CMD_STOP) {
-					currentCommand = 0x70;
+					currentCommand = 0x00;
 				} else {
 					printf("Command: |%c|\n", slice->buf[0]);
-					currentCommand = 0xF0;
+					currentCommand = 0x00;
 				}
 				curCommand = currentCommand;
-				IOWR_8DIRECT(PIO_LEDS_BASE, 0, charInter | charRecv | curCommand);
+
+
+				IOWR_8DIRECT(PIO_LEDS_BASE, 0, charInter | charRecv | curCommand | (sendCount << 4));
 			}
-//			printf("Got: %s\n", slice->buf);
 			size_t i;
 			for (i = 0; i < slice->len; ++i) {
 				handle_bluetooth_input(slice->buf[i]);
@@ -253,7 +203,7 @@ int main(void)
 
     INT8U err;
     if(initBluetooth()) {
-    	  err = OSTaskCreateExt(sendTask,
+    	  OSTaskCreateExt(sendTask,
     	                  NULL,
     	                  (void *)&task3_stk[TASK_STACKSIZE-1],
     	                  TASK3_PRIORITY,
@@ -285,7 +235,7 @@ int main(void)
                   TASK_STACKSIZE,
                   NULL,
                   0);
-//
+
   OSTaskCreateExt(task2,
                   NULL,
                   (void *)&task2_stk[TASK_STACKSIZE-1],
@@ -295,17 +245,6 @@ int main(void)
                   TASK_STACKSIZE,
                   NULL,
                   0);
-
-
-//  OSTaskCreateExt(echoTask,
-//                  NULL,
-//                  (void *)&task5_stk[TASK_STACKSIZE-1],
-//                  TASK5_PRIORITY,
-//                  TASK5_PRIORITY,
-//                  task5_stk,
-//                  TASK_STACKSIZE,
-//                  NULL,
-//                  0);
 
   if(alt_ic_isr_register(
 				  UART_BLUETOOTH_IRQ_INTERRUPT_CONTROLLER_ID,

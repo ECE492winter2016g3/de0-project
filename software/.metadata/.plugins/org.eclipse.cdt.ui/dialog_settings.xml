@@ -18,8 +18,8 @@
 		<item value="true" key="org.eclipse.cdt.internal.ui.text.COutlineInformationControlDIALOG_USE_PERSISTED_LOCATION"/>
 	</section>
 	<section name="org.eclipse.cdt.ui.text.hover.CMacroExpansionExploration.internal">
-		<item value="655" key="size.width"/>
-		<item value="156" key="size.height"/>
+		<item value="643" key="size.width"/>
+		<item value="144" key="size.height"/>
 	</section>
 	<section name="org.eclipse.cdt.ui.text.hover.CMacroExpansionExploration">
 	</section>
